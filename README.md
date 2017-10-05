@@ -8,7 +8,7 @@ This plugin implements database migration principles for HIVE databases.
 
 # Resources
 
-http://enterprisecraftsmanship.com/2015/08/10/database-versioning-best-practices/
+* http://enterprisecraftsmanship.com/2015/08/10/database-versioning-best-practices/
 
 # Similar products
 
