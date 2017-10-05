@@ -14,11 +14,11 @@ public class ScriptExecutionUtil {
 	public static void executeScript(Map<String, String> config, Statement stmt, String scriptName,
 			List<SQLStatement> statements) {
 		//
-		logger.warn("Executing script: " + scriptName);
+		logger.info("Executing script: " + scriptName);
 		//
 		for (SQLStatement s : statements) {
 			//
-			logger.warn(scriptName + " " + s.line + ": [" + s.sql + "]");
+			logger.info(scriptName + ":" + s.line + " " + s.sql.substring(0, Math.min(s.sql.length(), 15))+"... ");
 			//
 			JDBCUtil.execute(stmt, s.sql);
 			//

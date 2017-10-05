@@ -26,11 +26,11 @@ public class MigrateSchemaCreator {
 		String schema = config.get(AbstractTask.KEY_SCHEMA);
 		//
 		if (!doesSchemaExist(con, schema)) {
-			logger.info("Schema did not exist.");
+			logger.info("Schema does not exist: " + schema);
 			createSchema(config, con, schema);
 			logger.info("Schema created.");
 		} else {
-			logger.info("Schema already exists.");
+			logger.info("Schema already exists: " + schema);
 		}
 		//
 	}
@@ -41,6 +41,7 @@ public class MigrateSchemaCreator {
 		try {
 			stmt = JDBCUtil.createStatement(con);
 			//
+			// TODO: look first in Filesystem if overriden by project in db/support
 			String resourceLocation = "db/createSchema.sql";
 			String script = ResourceUtil.loadResource(resourceLocation);
 			String scriptName = resourceLocation.replaceAll("db/", "res:");

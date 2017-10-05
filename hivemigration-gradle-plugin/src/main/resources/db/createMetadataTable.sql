@@ -11,20 +11,20 @@
 --    execution_time: milliseconds ellapsed for the execution of the script.
 --    success: 1 ok, 0 error.
 
-CREATE TABLE "${schema}"."${table}" (
-    "installed_rank" INT NOT NULL,
-    "version" VARCHAR2(50), 
-    "description" VARCHAR2(200) NOT NULL,
-    "type" VARCHAR(20) NOT NULL,
-    "script" VARCHAR(1000) NOT NULL,
-    "checksum" INT,
-    "installed_by" VARCHAR(100) NOT NULL,
-    "installed_on" TIMESTAMPNOT NULL,
-    "execution_time" INT NOT NULL,
-    "success" DECIMAL(1) NOT NULL
+CREATE TABLE ${schema}.${table} (
+    installed_rank INT,
+    version VARCHAR(50), 
+    description VARCHAR(200),
+    type VARCHAR(20),
+    script VARCHAR(1000),
+    checksum INT,
+    installed_by VARCHAR(100),
+    installed_on TIMESTAMP,
+    execution_time INT,
+    success DECIMAL(1)
 );
 
---ALTER TABLE "${schema}"."${table}" ADD CONSTRAINT "${table}_pk" PRIMARY KEY ("installed_rank");
+--ALTER TABLE ${schema}.${table} ADD CONSTRAINT ${table}_pk PRIMARY KEY (installed_rank);
 
---CREATE INDEX "${schema}"."${table}_s_idx" ON "${schema}"."${table}" ("success");
+--CREATE INDEX ${schema}.${table}_s_idx ON ${schema}.${table} ("success");
 

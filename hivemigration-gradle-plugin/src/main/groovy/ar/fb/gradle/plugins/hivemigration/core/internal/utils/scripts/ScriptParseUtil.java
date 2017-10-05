@@ -27,7 +27,7 @@ public class ScriptParseUtil {
 			//
 			line = clean(line);
 			//
-			if (!isComment(line)) {
+			if (!line.isEmpty() && !isComment(line)) {
 				//
 				if (firstLine == -1) {
 					firstLine = lineNumber;
@@ -53,7 +53,7 @@ public class ScriptParseUtil {
 			}
 		}
 		//
-		if (firstLine != -1) {
+		if (buffer.length()!=0) {
 			SQLStatement sqlStatement = new SQLStatement(firstLine + 1, buffer.toString());
 			list.add(sqlStatement);
 		}

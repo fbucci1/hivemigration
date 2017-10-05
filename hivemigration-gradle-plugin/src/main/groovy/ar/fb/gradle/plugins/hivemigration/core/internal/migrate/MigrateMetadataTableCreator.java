@@ -28,11 +28,11 @@ public class MigrateMetadataTableCreator {
 		String table = config.get(AbstractTask.KEY_TABLE);
 		//
 		if (!doesTableExist(con, schema, table)) {
-			logger.info("Table did not exist.");
+			logger.info("Metadata table does not exist: "+table);
 			createTable(config, con, schema, table);
-			logger.info("Table created.");
+			logger.info("Metadata table created: "+table);
 		} else {
-			logger.info("Table already exists.");
+			logger.info("Metadata table already exists: "+table);
 		}
 		//
 	}
@@ -43,6 +43,7 @@ public class MigrateMetadataTableCreator {
 		try {
 			stmt = JDBCUtil.createStatement(con);
 			//
+			// TODO: look first in Filesystem if overriden by project in db/support
 			String resourceLocation = "db/createMetadataTable.sql";
 			String script = ResourceUtil.loadResource(resourceLocation);
 			String scriptName = resourceLocation.replaceAll("db/", "res:");

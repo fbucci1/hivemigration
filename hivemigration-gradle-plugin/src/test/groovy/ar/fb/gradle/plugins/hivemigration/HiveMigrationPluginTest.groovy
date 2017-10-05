@@ -31,10 +31,11 @@ class HiveMigrationPluginTest {
 		Project project = ProjectBuilder.builder().build()
 		project.pluginManager.apply HiveMigrationPlugin.NAME
 		project.tasks.migrate.setConfiguration(AbstractTask.KEY_URL,"jdbc:hive2://localhost:10000")
-		project.tasks.migrate.setConfiguration(AbstractTask.KEY_ENV,"ENV_UAT")
+		project.tasks.migrate.setConfiguration(AbstractTask.KEY_ENV,"UAT")
 		project.tasks.migrate.setConfiguration(AbstractTask.KEY_SCHEMA,"STAGE_\${ENV}")
 		project.tasks.migrate.setConfiguration(AbstractTask.KEY_PROJECT_ROOT,"../hivemigration-sample")
 		project.tasks.migrate.setConfiguration(AbstractTask.KEY_LOCATION,"db/changelog")
+		project.tasks.migrate.setConfiguration(AbstractTask.KEY_TARGET,"2")
 		project.tasks.migrate.execute()
 	}
 }

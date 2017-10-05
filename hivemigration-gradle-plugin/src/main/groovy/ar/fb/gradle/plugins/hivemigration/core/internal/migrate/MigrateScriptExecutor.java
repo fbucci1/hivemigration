@@ -31,7 +31,16 @@ public class MigrateScriptExecutor {
 		//
 		for (Integer version : sortedVFiles.keySet()) {
 			//
-			executeScript(config, con, version, sortedVFiles.get(version));
+			File file = sortedVFiles.get(version);
+			//
+			String auxTarget = config.get(AbstractTask.KEY_TARGET);
+			Integer target = auxTarget == null ? null : Integer.valueOf(auxTarget);
+			//
+			if (target != null && version > target) {
+				logger.info("Ignoring script: " + file.getName() + ", target: " + target);
+			} else {
+				executeScript(config, con, version, file);
+			}
 			//
 		}
 	}

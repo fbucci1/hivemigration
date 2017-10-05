@@ -1,9 +1,13 @@
 package ar.fb.gradle.plugins.hivemigration.tasks;
 
 import java.io.File;
+import java.sql.Statement;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
@@ -12,8 +16,12 @@ import org.gradle.api.tasks.TaskAction;
 import ar.fb.gradle.plugins.hivemigration.HiveMigrationExtension;
 import ar.fb.gradle.plugins.hivemigration.HiveMigrationManagedException;
 import ar.fb.gradle.plugins.hivemigration.core.internal.utils.PlaceholderUtil;
+import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.SQLStatement;
+import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil;
 
 public abstract class AbstractTask extends DefaultTask {
+
+	static final Logger logger = LogManager.getLogger(ScriptExecutionUtil.class.getName());
 
 	// Extensions
 	// The jdbc url to use to connect to the database
@@ -106,21 +114,67 @@ public abstract class AbstractTask extends DefaultTask {
 		validateSemantics();
 	}
 
-	private void validateSemantics() {
+	private void loadValuesFromExtensions() {
 		//
-		// Semantic validation
+		// Load values from extensions
 		//
-		if (!config.get(KEY_DRIVER).equals("org.apache.hive.jdbc.HiveDriver")) {
-			throw new HiveMigrationManagedException("driver not supported: " + config.get(KEY_DRIVER)
-					+ ". Only supported driver is 'org.apache.hive.jdbc.HiveDriver'.");
+		if (extension != null) {
+			config.put(KEY_URL, extension.url);
+			config.put(KEY_DRIVER, extension.driver);
+			config.put(KEY_ENV, extension.ENV);
+			config.put(KEY_USER, extension.user);
+			config.put(KEY_PASSWORD, extension.password);
+			config.put(KEY_SCHEMA, extension.schema);
+			config.put(KEY_TABLE, extension.table);
+			config.put(KEY_PROJECT_ROOT, extension.projectRoot);
+			config.put(KEY_LOCATION, extension.location);
+			config.put(KEY_TARGET, (extension.target == null ? null : extension.target.toString()));
 		}
 	}
 
-	private void replaceTokens() {
+	private void loadValuesFromEnvVariables() {
 		//
-		// Replace tokens
+		// Load values from environment variables if not loaded so far
 		//
-		config.put(AbstractTask.KEY_SCHEMA, PlaceholderUtil.replaceTokens(config, config.get(AbstractTask.KEY_SCHEMA)));
+		// KEY_URL cannot be loaded from env variables
+		// KEY_DRIVER cannot be loaded from env variables
+		if (config.get(KEY_ENV) == null && System.getenv(ENV_KEY_ENV) != null) {
+			logger.info("Using environment variable: " + ENV_KEY_ENV);
+			config.put(KEY_ENV, System.getenv(ENV_KEY_ENV));
+		}
+		if (config.get(KEY_USER) == null && System.getenv(ENV_KEY_USER)!=null) {
+			logger.info("Using environment variable: " + ENV_KEY_USER);
+			config.put(KEY_USER, System.getenv(ENV_KEY_USER));
+		}
+		if (config.get(KEY_PASSWORD) == null && System.getenv(ENV_KEY_PASSWORD)!=null) {
+			logger.info("Using environment variable: " + ENV_KEY_PASSWORD);
+			config.put(KEY_PASSWORD, System.getenv(ENV_KEY_PASSWORD));
+		}
+		// KEY_SCHEMA cannot be loaded from env variables
+		// KEY_TABLE cannot be loaded from env variables
+		// KEY_PROJECT_ROOT cannot be loaded from env variables
+		// KEY_LOCATION cannot be loaded from env variables
+		// KEY_TARGET cannot be loaded from env variables
+	}
+
+	private void setDefaultValues() {
+		//
+		// Set default values, respecting pre-existing values (set for testing)
+		//
+		// KEY_URL has no default value
+		if (config.get(KEY_DRIVER) == null)
+			config.put(KEY_DRIVER, "org.apache.hive.jdbc.HiveDriver");
+		// KEY_ENV has no default value
+		// KEY_USER has no default value
+		// KEY_PASSWORD has no default value
+		// KEY_SCHEMA has no default value
+		if (config.get(KEY_TABLE) == null)
+			config.put(KEY_TABLE, "VERSIONING_METADATA");
+		if (config.get(KEY_PROJECT_ROOT) == null)
+			config.put(KEY_PROJECT_ROOT, (new File(".")).getAbsolutePath());
+		if (config.get(KEY_LOCATION) == null)
+			config.put(KEY_LOCATION, "db/changelog");
+		// KEY_TARGET has defaults to null
 	}
 
 	private void checkMandatoryFields() {
@@ -146,64 +200,20 @@ public abstract class AbstractTask extends DefaultTask {
 		// KEY_TARGET skipped as it is not mandatory
 	}
 
-	private void setDefaultValues() {
+	private void replaceTokens() {
 		//
-		// Set default values, respecting pre-existing values (set for testing)
+		// Replace tokens
 		//
-		// KEY_URL has no default value
-		if (config.get(KEY_DRIVER) == null)
-			config.put(KEY_DRIVER, "org.apache.hive.jdbc.HiveDriver");
-		// KEY_ENV has no default value
-		// KEY_USER has no default value
-		// KEY_PASSWORD has no default value
-		// KEY_SCHEMA has no default value
-		if (config.get(KEY_TABLE) == null)
-			config.put(KEY_TABLE, "VERSIONING_METADATA");
-		if (config.get(KEY_PROJECT_ROOT) == null)
-			config.put(KEY_PROJECT_ROOT, (new File(".")).getAbsolutePath());
-		if (config.get(KEY_LOCATION) == null)
-			config.put(KEY_LOCATION, "db/changelog");
-		if (config.get(KEY_TARGET) == null)
-			config.put(KEY_TARGET, "latest version");
+		config.put(AbstractTask.KEY_SCHEMA, PlaceholderUtil.replaceTokens(config, config.get(AbstractTask.KEY_SCHEMA)));
 	}
 
-	private void loadValuesFromEnvVariables() {
+	private void validateSemantics() {
 		//
-		// Load values from environment variables if not loaded so far
+		// Semantic validation
 		//
-		// KEY_URL cannot be loaded from env variables
-		// KEY_DRIVER cannot be loaded from env variables
-		if (config.get(KEY_ENV) == null) {
-			config.put(KEY_ENV, System.getenv(ENV_KEY_ENV));
-		}
-		if (config.get(KEY_USER) == null) {
-			config.put(KEY_USER, System.getenv(ENV_KEY_USER));
-		}
-		if (config.get(KEY_PASSWORD) == null) {
-			config.put(KEY_PASSWORD, System.getenv(ENV_KEY_PASSWORD));
-		}
-		// KEY_SCHEMA cannot be loaded from env variables
-		// KEY_TABLE cannot be loaded from env variables
-		// KEY_PROJECT_ROOT cannot be loaded from env variables
-		// KEY_LOCATION cannot be loaded from env variables
-		// KEY_TARGET cannot be loaded from env variables
-	}
-
-	private void loadValuesFromExtensions() {
-		//
-		// Load values from extensions
-		//
-		if (extension != null) {
-			config.put(KEY_URL, extension.url);
-			config.put(KEY_DRIVER, extension.driver);
-			config.put(KEY_ENV, extension.ENV);
-			config.put(KEY_USER, extension.user);
-			config.put(KEY_PASSWORD, extension.password);
-			config.put(KEY_SCHEMA, extension.schema);
-			config.put(KEY_TABLE, extension.table);
-			config.put(KEY_PROJECT_ROOT, extension.projectRoot);
-			config.put(KEY_LOCATION, extension.location);
-			config.put(KEY_TARGET, extension.target);
+		if (!config.get(KEY_DRIVER).equals("org.apache.hive.jdbc.HiveDriver")) {
+			throw new HiveMigrationManagedException("driver not supported: " + config.get(KEY_DRIVER)
+					+ ". Only supported driver is 'org.apache.hive.jdbc.HiveDriver'.");
 		}
 	}
 
