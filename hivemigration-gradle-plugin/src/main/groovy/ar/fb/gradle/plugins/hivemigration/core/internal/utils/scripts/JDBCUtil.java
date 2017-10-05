@@ -1,4 +1,4 @@
-package ar.fb.gradle.plugins.hivemigration.core.internal.migrate;
+package ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,9 +15,9 @@ import org.apache.logging.log4j.Logger;
 import ar.fb.gradle.plugins.hivemigration.HiveMigrationManagedException;
 import ar.fb.gradle.plugins.hivemigration.tasks.AbstractTask;
 
-public class SQLUtil {
+public class JDBCUtil {
 
-	static final Logger logger = LogManager.getLogger(SQLUtil.class.getName());
+	static final Logger logger = LogManager.getLogger(JDBCUtil.class.getName());
 
 	public static boolean next(ResultSet rs) {
 		try {

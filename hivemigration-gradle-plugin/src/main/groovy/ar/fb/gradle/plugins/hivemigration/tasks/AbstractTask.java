@@ -11,6 +11,7 @@ import org.gradle.api.tasks.TaskAction;
 
 import ar.fb.gradle.plugins.hivemigration.HiveMigrationExtension;
 import ar.fb.gradle.plugins.hivemigration.HiveMigrationManagedException;
+import ar.fb.gradle.plugins.hivemigration.core.internal.utils.PlaceholderUtil;
 
 public abstract class AbstractTask extends DefaultTask {
 
@@ -33,10 +34,6 @@ public abstract class AbstractTask extends DefaultTask {
 	public static final String KEY_PROJECT_ROOT = "projectRoot";
 	// Relative path to the location to scan for migrations
 	public static final String KEY_LOCATION = "location";
-	// The prefix of every placeholder
-	public static final String KEY_PLACEHOLDER_PREFIX = "placeholderPrefix";
-	// The sufix of every placeholder
-	public static final String KEY_PLACEHOLDER_SUFIX = "placeholderSufix";
 	// The target version up to which should consider migrations
 	public static final String KEY_TARGET = "target";
 
@@ -83,22 +80,7 @@ public abstract class AbstractTask extends DefaultTask {
 
 	void setConfigurations() {
 		//
-		// Load values from extensions
-		//
-		if (extension != null) {
-			config.put(KEY_URL, extension.url);
-			config.put(KEY_DRIVER, extension.driver);
-			config.put(KEY_ENV, extension.ENV);
-			config.put(KEY_USER, extension.user);
-			config.put(KEY_PASSWORD, extension.password);
-			config.put(KEY_SCHEMA, extension.schema);
-			config.put(KEY_TABLE, extension.table);
-			config.put(KEY_PROJECT_ROOT, extension.projectRoot);
-			config.put(KEY_LOCATION, extension.location);
-			config.put(KEY_PLACEHOLDER_PREFIX, extension.placeholderPrefix);
-			config.put(KEY_PLACEHOLDER_SUFIX, extension.placeholderSufix);
-			config.put(KEY_TARGET, extension.target);
-		}
+		loadValuesFromExtensions();
 
 		//
 		// Load values from command line arguments if not loaded so far
@@ -113,51 +95,35 @@ public abstract class AbstractTask extends DefaultTask {
 		// }
 		// Then it can be called: gradle migrate -PENV=xxx -Puser=xxx -Ppassword=xxx
 
+		loadValuesFromEnvVariables();
 		//
-		// Load values from environment variables if not loaded so far
+		setDefaultValues();
 		//
-		// KEY_URL cannot be loaded from env variables
-		// KEY_DRIVER cannot be loaded from env variables
-		if (config.get(KEY_ENV) == null) {
-			config.put(KEY_ENV, System.getenv(ENV_KEY_ENV));
-		}
-		if (config.get(KEY_USER) == null) {
-			config.put(KEY_USER, System.getenv(ENV_KEY_USER));
-		}
-		if (config.get(KEY_PASSWORD) == null) {
-			config.put(KEY_PASSWORD, System.getenv(ENV_KEY_PASSWORD));
-		}
-		// KEY_SCHEMA cannot be loaded from env variables
-		// KEY_TABLE cannot be loaded from env variables
-		// KEY_PROJECT_ROOT cannot be loaded from env variables
-		// KEY_LOCATION cannot be loaded from env variables
-		// KEY_PLACEHOLDER_PREFIX cannot be loaded from env variables
-		// KEY_PLACEHOLDER_SUFIX cannot be loaded from env variables
-		// KEY_TARGET cannot be loaded from env variables
+		checkMandatoryFields();
+		//
+		replaceTokens();
+		//
+		validateSemantics();
+	}
 
+	private void validateSemantics() {
 		//
-		// Set default values, respecting pre-existing values (set for testing)
+		// Semantic validation
 		//
-		// KEY_URL has no default value
-		if (config.get(KEY_DRIVER) == null)
-			config.put(KEY_DRIVER, "org.apache.hive.jdbc.HiveDriver");
-		// KEY_ENV has no default value
-		// KEY_USER has no default value
-		// KEY_PASSWORD has no default value
-		// KEY_SCHEMA has no default value
-		if (config.get(KEY_TABLE) == null)
-			config.put(KEY_TABLE, "__VERSIONING__");
-		if (config.get(KEY_PROJECT_ROOT) == null)
-			config.put(KEY_PROJECT_ROOT, (new File(".")).getAbsolutePath());
-		if (config.get(KEY_LOCATION) == null)
-			config.put(KEY_LOCATION, "db/changelog");
-		if (config.get(KEY_PLACEHOLDER_PREFIX) == null)
-			config.put(KEY_PLACEHOLDER_PREFIX, "$" + "{");
-		if (config.get(KEY_PLACEHOLDER_SUFIX) == null)
-			config.put(KEY_PLACEHOLDER_SUFIX, "}");
-		if (config.get(KEY_TARGET) == null)
-			config.put(KEY_TARGET, "latest version");
+		if (!config.get(KEY_DRIVER).equals("org.apache.hive.jdbc.HiveDriver")) {
+			throw new HiveMigrationManagedException("driver not supported: " + config.get(KEY_DRIVER)
+					+ ". Only supported driver is 'org.apache.hive.jdbc.HiveDriver'.");
+		}
+	}
 
+	private void replaceTokens() {
+		//
+		// Replace tokens
+		//
+		config.put(AbstractTask.KEY_SCHEMA, PlaceholderUtil.replaceTokens(config, config.get(AbstractTask.KEY_SCHEMA)));
+	}
+
+	private void checkMandatoryFields() {
 		//
 		// Ensure mandatory fields have values at last
 		//
@@ -177,30 +143,68 @@ public abstract class AbstractTask extends DefaultTask {
 		// KEY_TABLE skipped as it is not mandatory;
 		// KEY_PROJECT_ROOT skipped as it is not mandatory
 		// KEY_LOCATION skipped as it is not mandatory
-		// KEY_PLACEHOLDER_PREFIX skipped as it is not mandatory
-		// KEY_PLACEHOLDER_SUFIX skipped as it is not mandatory
 		// KEY_TARGET skipped as it is not mandatory
-
-		//
-		// Replace tokens
-		//
-		replaceTokens(config,AbstractTask.KEY_SCHEMA);
-
-		//
-		// Semantic validation
-		//
-		if (!config.get(KEY_DRIVER).equals("org.apache.hive.jdbc.HiveDriver")) {
-			throw new HiveMigrationManagedException("driver not supported: " + config.get(KEY_DRIVER)
-					+ ". Only supported driver is 'org.apache.hive.jdbc.HiveDriver'.");
-		}
 	}
 
-	private void replaceTokens(Map<String, String> config2, String key) {
-		String v = config.get(key);
-		for (String key2 : config.keySet()) {
-			v = v.replaceAll("\\$\\{" + key2 + "\\}", config.get(key2));
+	private void setDefaultValues() {
+		//
+		// Set default values, respecting pre-existing values (set for testing)
+		//
+		// KEY_URL has no default value
+		if (config.get(KEY_DRIVER) == null)
+			config.put(KEY_DRIVER, "org.apache.hive.jdbc.HiveDriver");
+		// KEY_ENV has no default value
+		// KEY_USER has no default value
+		// KEY_PASSWORD has no default value
+		// KEY_SCHEMA has no default value
+		if (config.get(KEY_TABLE) == null)
+			config.put(KEY_TABLE, "VERSIONING_METADATA");
+		if (config.get(KEY_PROJECT_ROOT) == null)
+			config.put(KEY_PROJECT_ROOT, (new File(".")).getAbsolutePath());
+		if (config.get(KEY_LOCATION) == null)
+			config.put(KEY_LOCATION, "db/changelog");
+		if (config.get(KEY_TARGET) == null)
+			config.put(KEY_TARGET, "latest version");
+	}
+
+	private void loadValuesFromEnvVariables() {
+		//
+		// Load values from environment variables if not loaded so far
+		//
+		// KEY_URL cannot be loaded from env variables
+		// KEY_DRIVER cannot be loaded from env variables
+		if (config.get(KEY_ENV) == null) {
+			config.put(KEY_ENV, System.getenv(ENV_KEY_ENV));
 		}
-		config.put(key, v);
+		if (config.get(KEY_USER) == null) {
+			config.put(KEY_USER, System.getenv(ENV_KEY_USER));
+		}
+		if (config.get(KEY_PASSWORD) == null) {
+			config.put(KEY_PASSWORD, System.getenv(ENV_KEY_PASSWORD));
+		}
+		// KEY_SCHEMA cannot be loaded from env variables
+		// KEY_TABLE cannot be loaded from env variables
+		// KEY_PROJECT_ROOT cannot be loaded from env variables
+		// KEY_LOCATION cannot be loaded from env variables
+		// KEY_TARGET cannot be loaded from env variables
+	}
+
+	private void loadValuesFromExtensions() {
+		//
+		// Load values from extensions
+		//
+		if (extension != null) {
+			config.put(KEY_URL, extension.url);
+			config.put(KEY_DRIVER, extension.driver);
+			config.put(KEY_ENV, extension.ENV);
+			config.put(KEY_USER, extension.user);
+			config.put(KEY_PASSWORD, extension.password);
+			config.put(KEY_SCHEMA, extension.schema);
+			config.put(KEY_TABLE, extension.table);
+			config.put(KEY_PROJECT_ROOT, extension.projectRoot);
+			config.put(KEY_LOCATION, extension.location);
+			config.put(KEY_TARGET, extension.target);
+		}
 	}
 
 	public void setConfiguration(String key, String value) {

@@ -22,10 +22,6 @@ class HiveMigrationExtension {
 		public String projectRoot;	
 		// Relative path to the location to scan for migrations
 		public String location
-		// The prefix of every placeholder
-		public String placeholderPrefix
-		// The sufix of every placeholder
-		public String placeholderSufix
 		// The target version up to which should consider migrations
 		public String target
 
