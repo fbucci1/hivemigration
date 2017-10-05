@@ -1,0 +1,29 @@
+ext {
+    meta = [:]
+    meta.versionName = '0.0.1'
+    meta.group = 'ar.fb.gradle.plugins.hivemigration'
+    meta.pomArtifactId = 'gradle-hivemigration-plugin'
+    meta.javaCompatibility = 1.8
+    meta.gitHubUsername = 'fbucci'
+    meta.gitHubFullname = 'Fernando Bucci'
+    meta.gitHubUrl = "https://github.com/${meta.gitHubUsername}/${meta.pomArtifactId}"
+    meta.pomName = meta.pomArtifactId
+    meta.pomInceptionYear = '2015'
+    meta.pomDescription = 'Gradle plugin to support HIVE database migrations.'
+    meta.pomUrl = meta.gitHubUrl
+    meta.pomScmUrl = meta.gitHubUrl
+    meta.pomScmConnection = "scm:git@github.com/${meta.gitHubUsername}/${meta.pomArtifactId}.git"
+    meta.pomScmDevConnection = "scm:git@github.com:${meta.gitHubUsername}/${meta.pomArtifactId}.git"
+    meta.pomLicenseName = 'Apache Licence 2.0'
+    meta.pomLicenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0'
+    meta.pomLicenseDist = 'repo'
+    meta.pomDeveloperId = meta.gitHubUsername
+    meta.pomDeveloperName = meta.gitHubFullname
+    meta.pomDeveloperUrl = "http://github.com/${meta.gitHubUsername}"
+    meta.localRepositoryUrl = uri('.repo')
+    meta.pluginVcsurl = "https://github.com/${meta.gitHubUsername}/${meta.pomArtifactId}.git"
+    meta.pluginTags = []
+    meta.gradlePluginId = 'gradle-hivemigration-plugin'
+    meta.propNameOssrhUsername = 'ossrhUsername'
+    meta.propNameOssrhPassword = 'ossrhPassword'
+}
