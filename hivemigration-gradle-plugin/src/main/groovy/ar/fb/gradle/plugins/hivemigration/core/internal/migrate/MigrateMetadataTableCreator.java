@@ -52,7 +52,6 @@ public class MigrateMetadataTableCreator {
 			map.put("ENV", config.get(AbstractTask.KEY_ENV));
 			map.put("schema", config.get(AbstractTask.KEY_SCHEMA));
 			map.put("table", config.get(AbstractTask.KEY_TABLE));
-			//
 			script = PlaceholderUtil.replaceTokens(map, script);
 			//
 			List<SQLStatement> statements = ScriptParseUtil.readStatementsFromScript(script, scriptName);

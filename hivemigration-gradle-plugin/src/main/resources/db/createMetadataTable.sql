@@ -13,11 +13,8 @@
 
 CREATE TABLE ${schema}.${table} (
     installed_rank INT,
-    version VARCHAR(50), 
-    description VARCHAR(200),
-    type VARCHAR(20),
+    version INT, 
     script VARCHAR(1000),
-    checksum INT,
     installed_by VARCHAR(100),
     installed_on TIMESTAMP,
     execution_time INT,

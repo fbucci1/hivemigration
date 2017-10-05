@@ -1,9 +1,12 @@
 package ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -112,6 +115,29 @@ public class JDBCUtil {
 			return rs.getString(i);
 		} catch (SQLException e) {
 			throw new HiveMigrationManagedException("Error fetching String from resultset", e);
+		}
+	}
+
+	public static int executeUpdate(Connection con, String sql, List<Object> values) {
+		PreparedStatement stmt = null;
+		try {
+			stmt = con.prepareStatement(sql);
+			//
+			for (int i = 0; i < values.size(); i++) {
+				Object value = values.get(i);
+				if (value instanceof java.util.Date) {
+					stmt.setDate(i + 1, new java.sql.Date(((java.util.Date)value).getTime()));
+				} else {
+					stmt.setObject(i + 1, value);
+				}
+			}
+			//
+			return stmt.executeUpdate();
+			//
+		} catch (SQLException e) {
+			throw new HiveMigrationManagedException("Error executing update: " + sql, e);
+		} finally {
+			JDBCUtil.closeStatement(stmt);
 		}
 	}
 

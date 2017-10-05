@@ -2,8 +2,10 @@ package ar.fb.gradle.plugins.hivemigration.core.internal.migrate;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,22 +29,97 @@ public class MigrateScriptExecutor {
 
 	public static void executeScripts(Map<String, String> config, Connection con, File schemaFolder) {
 		//
+		Integer initialVersion = retrieveInitialVersion(config, con);
+		//
+		String auxTarget = config.get(AbstractTask.KEY_TARGET);
+		Integer target = auxTarget == null ? null : Integer.valueOf(auxTarget);
+		//
+		logger.info("Current version in schema is " + initialVersion + ". Target is " + target);
+		//
 		Map<Integer, File> sortedVFiles = getSortedVFiles(schemaFolder);
 		//
 		for (Integer version : sortedVFiles.keySet()) {
 			//
 			File file = sortedVFiles.get(version);
 			//
-			String auxTarget = config.get(AbstractTask.KEY_TARGET);
-			Integer target = auxTarget == null ? null : Integer.valueOf(auxTarget);
-			//
 			if (target != null && version > target) {
-				logger.info("Ignoring script: " + file.getName() + ", target: " + target);
+				logger.info("Ignoring script: " + file.getName());
+			} else if (initialVersion != null && version <= initialVersion) {
+				logger.info("Ignoring script: " + file.getName());
 			} else {
-				executeScript(config, con, version, file);
+				//
+				int success = 0;
+				long initTime = System.currentTimeMillis();
+				try {
+					executeScript(config, con, version, file);
+					success = 1;
+				} catch (NullPointerException e) {
+				}
+				long endTime = System.currentTimeMillis();
+				//
+				long executionTime = endTime - initTime;
+				insertRowInMetadataTable(config, con, version, file, executionTime, success);
 			}
 			//
 		}
+	}
+
+	private static void insertRowInMetadataTable(Map<String, String> config, Connection con, Integer version, File file,
+			long executionTime, int success) {
+		//
+		String sql = "INSERT INTO ${schema}.${table} " + //
+				"(installed_rank,version,script,installed_by,installed_on,execution_time,success) values " + //
+				"(?,?,?,?,?,?,?)";
+		//
+		List<Object> values = new ArrayList<Object>();
+		values.add(0);
+		values.add(version);
+		values.add(file.getName());
+		values.add(new Date());
+		values.add(config.get(AbstractTask.KEY_USER));
+		values.add(executionTime);
+		values.add(success);
+		//
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("ENV", config.get(AbstractTask.KEY_ENV));
+		map.put("schema", config.get(AbstractTask.KEY_SCHEMA));
+		map.put("table", config.get(AbstractTask.KEY_TABLE));
+		sql = PlaceholderUtil.replaceTokens(map, sql);
+		//
+		JDBCUtil.executeUpdate(con, sql, values);
+		//
+	}
+
+	private static Integer retrieveInitialVersion(Map<String, String> config, Connection con) {
+		//
+		Integer initialVersion = null;
+		//
+		Statement stmt = null;
+		try {
+			stmt = JDBCUtil.createStatement(con);
+			//
+			String sql = "Select max(version) from ${schema}.${table}";
+			//
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("ENV", config.get(AbstractTask.KEY_ENV));
+			map.put("schema", config.get(AbstractTask.KEY_SCHEMA));
+			map.put("table", config.get(AbstractTask.KEY_TABLE));
+			sql = PlaceholderUtil.replaceTokens(map, sql);
+			//
+			ResultSet rs = JDBCUtil.executeQuery(stmt, sql);
+			//
+			if (JDBCUtil.next(rs)) {
+				String auxMax = JDBCUtil.getStringFromResultset(rs, 1);
+				if (auxMax != null) {
+					initialVersion = Integer.valueOf(auxMax);
+				}
+			}
+			//
+		} finally {
+			JDBCUtil.closeStatement(stmt);
+		}
+		//
+		return initialVersion;
 	}
 
 	private static void executeScript(Map<String, String> config, Connection con, Integer version, File file) {

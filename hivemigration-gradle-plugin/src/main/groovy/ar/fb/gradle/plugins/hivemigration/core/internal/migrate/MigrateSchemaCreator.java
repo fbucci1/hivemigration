@@ -49,7 +49,6 @@ public class MigrateSchemaCreator {
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("ENV", config.get(AbstractTask.KEY_ENV));
 			map.put("schema", config.get(AbstractTask.KEY_SCHEMA));
-			//
 			script = PlaceholderUtil.replaceTokens(map, script);
 			//
 			List<SQLStatement> statements = ScriptParseUtil.readStatementsFromScript(script, scriptName);
