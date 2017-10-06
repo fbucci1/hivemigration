@@ -68,6 +68,8 @@ In case a migration was not successfull, it will be re-tried the next time the p
 
 ## Configuration
 
+Properties in the build.gradle file:
+
 |Name|Type|Description|
 |---|---|---|
 |url|String|The jdbc url to use to connect to the database. Mandatory.|
@@ -81,11 +83,37 @@ In case a migration was not successfull, it will be re-tried the next time the p
 |location|String|Relative path to the location to scan for migrations. Optional. Defaults to "db/changelog".|
 |target|String|The target version up to which should consider migrations. Use null if latest.|
 
+Environment variables:
+
+|Name|Type|Description|
+|---|---|
+|ENV|The environment to use. Mandatory.|
+|user|The user to use to connect to the database. Optional. Defaults to "".|
+|password|The password to use to connect to the database. Optional. Defaults to "".|
+
+Notice environment variables are used only in case build.gradle file does not especify a value for the corresponding parameters.
+
+Properties in command line:
+
+As shown in the example above, properties can be passed from the command line. For instance: 
+
+´´´gradle migrate -Puser=HeyItIsMe´´´
+
+In order for the plugin to read the corresponding property, findProperty() method can be used. For instance:   
+
+   ´´´user=findProperty("user")´´´
+
 ## Metadata table
 
 |Name|Type|Description|
 |---|---|---|
-|aaa|aaa|aaa|
+|seq|BIGINT|Timestamp when script started executing (System.currentTimeMillis())|
+|version|INT|Database version. Retrieved from file name.|
+|script|VARCHAR(1000)|Name of the script file.|
+|installed_by|VARCHAR(100)|User used for HIVE connection.|
+|installed_on|VARCHAR(23)|Timestamp when script started being executed.|
+|execution_time|BIGINT|Milliseconds ellapsed for the execution of the script.|
+|success|DECIMAL(1)|1 ok, 0 error.|
 
 # Contributing
 
