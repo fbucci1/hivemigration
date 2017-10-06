@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,6 +27,8 @@ import ar.fb.gradle.plugins.hivemigration.tasks.AbstractTask;
 public class MigrateScriptExecutor {
 
 	static final Logger logger = LogManager.getLogger(MigrateScriptExecutor.class.getName());
+
+	static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public static void executeScripts(Map<String, String> config, Connection con, File schemaFolder) {
 		//
@@ -58,24 +61,24 @@ public class MigrateScriptExecutor {
 				long endTime = System.currentTimeMillis();
 				//
 				long executionTime = endTime - initTime;
-				insertRowInMetadataTable(config, con, version, file, executionTime, success);
+				insertRowInMetadataTable(config, con, version, file, initTime, executionTime, success);
 			}
 			//
 		}
 	}
 
 	private static void insertRowInMetadataTable(Map<String, String> config, Connection con, Integer version, File file,
-			long executionTime, int success) {
+			long initTime, long executionTime, int success) {
 		//
 		String sql = "INSERT INTO ${schema}.${table} " + //
-				"(installed_rank,version,script,installed_by,installed_on,execution_time,success) values " + //
+				"(seq,version,script,installed_by,installed_on,execution_time,success) values " + //
 				"(?,?,?,?,?,?,?)";
 		//
 		List<Object> values = new ArrayList<Object>();
-		values.add(0);
+		values.add(System.currentTimeMillis());
 		values.add(version);
 		values.add(file.getName());
-		values.add(new Date());
+		values.add(sdf.format(new Date(initTime)));
 		values.add(config.get(AbstractTask.KEY_USER));
 		values.add(executionTime);
 		values.add(success);

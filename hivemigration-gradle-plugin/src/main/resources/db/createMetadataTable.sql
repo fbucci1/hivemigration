@@ -12,12 +12,12 @@
 --    success: 1 ok, 0 error.
 
 CREATE TABLE ${schema}.${table} (
-    installed_rank INT,
+    seq DECIMAL(20),
     version INT, 
     script VARCHAR(1000),
     installed_by VARCHAR(100),
-    installed_on TIMESTAMP,
-    execution_time INT,
+    installed_on VARCHAR(20),
+    execution_time DECIMAL(20),
     success DECIMAL(1)
 );
 
