@@ -32,6 +32,23 @@ In case a migration was not successfull, it will be re-tried the next time the p
 
    HIVE schema can be migrated to a predefined version or to the latest version available. It is just up to you.
 
+# Example
+
+1. Download repository to your computer
+
+$ git clone https://github.com/fbucci1/hivemigration.git
+
+1. Ensure you have [HIVE Server HiveServer2](https://cwiki.apache.org/confluence/display/Hive/Setting+Up+HiveServer2) running.
+
+1. Build and install the plugin in your local Maven repository.
+
+hivemigration-gradle-plugin$ gradle install
+
+1. Check connection settings in the sample project: hivemigration-sample/build.gradle
+
+[[https://github.com/fbucci1/hivemigration//blob/master/img/octocat.png]]
+
+
 # Contributing
 
 ## Report Bugs
