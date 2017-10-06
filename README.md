@@ -10,8 +10,6 @@ Database Migrations is about updating the database from one version to the next 
 
 Migrations are written in HIVE QL and can consist of multiple statements.
 
-Within a single migration, all statements are run within a single transaction.
-
 ## Metadata table
 
 To keep track of which migrations have already been applied when and by whom, a special bookkeeping table is added to your schema. 
