@@ -81,7 +81,7 @@ In case a migration was not successfull, it will be re-tried the next time the p
 |table|String|The name of the table used for metadata. Optional. Defaults to "VERSIONING_METADATA".|
 |projectRoot|String|Project root folder. Optional. Defaults to gradlew file.|
 |location|String|Relative path to the location to scan for migrations. Optional. Defaults to "db/changelog".|
-|target|String|The target version up to which should consider migrations. Use null if latest.|
+|target|Integer|The target version up to which should consider migrations. Use null if latest.|
 
 ### Environment variables
 
