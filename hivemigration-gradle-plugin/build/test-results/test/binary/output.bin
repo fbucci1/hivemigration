@@ -1,0 +1,12 @@
+%Executing MigrateTask_Decorated task!
+†20:40:32.408 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil - Using environment variable: MIGRATE_DB_USER
+§20:40:32.411 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil - Using environment variable: MIGRATE_DB_PASSWORD
+É20:40:32.422 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.JDBCUtil - Instantiating JDBC driver
+î20:40:32.465 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.JDBCUtil - Connecting to jdbc:hive2://localhost:10000
+ê20:40:33.205 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.MigrateSchemaCreator - Schema already exists: STAGE_UAT
+©20:40:33.261 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.MigrateMetadataTableCreator - Metadata table already exists: VERSIONING_METADATA
+ú20:40:58.449 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.MigrateScriptExecutor - Current version in schema is 3. Target is 2
+ü20:40:58.452 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.MigrateScriptExecutor - Ignoring script: V1__create_sample_table_1.sql
+ü20:40:58.453 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.MigrateScriptExecutor - Ignoring script: V2__create_sample_table_2.sql
+ü20:40:58.453 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.MigrateScriptExecutor - Ignoring script: V3__create_sample_table_3.sql
+$Task MigrateTask_Decorated finished.
