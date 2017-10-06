@@ -34,19 +34,21 @@ In case a migration was not successfull, it will be re-tried the next time the p
 
 # Example
 
-1. Download repository to your computer
+1. Download the repository to your computer.
 
    ```$ git clone https://github.com/fbucci1/hivemigration.git```
 
-1. Ensure you have [HIVE Server HiveServer2](https://cwiki.apache.org/confluence/display/Hive/Setting+Up+HiveServer2) running.
-
-1. Build and install the plugin in your local Maven repository.
+1. Build and install the HiveMigration plugin in your local Maven repository.
 
    ```hivemigration-gradle-plugin$ gradle install```
 
-1. Check connection settings in the sample project: hivemigration-sample/build.gradle
+1. Check connection settings in the sample project: 
+
+   ```Use your favourite text editor to open hivemigration-sample/build.gradle```
 
    ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/build.gradle.png)
+
+1. Ensure your [HIVE Server - HiveServer2](https://cwiki.apache.org/confluence/display/Hive/Setting+Up+HiveServer2) is running.
 
 1. Execute plugin
 
