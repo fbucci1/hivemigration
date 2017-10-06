@@ -42,21 +42,21 @@ In case a migration was not successfull, it will be re-tried the next time the p
 
    ```hivemigration-gradle-plugin$ gradle install```
 
-1. Check connection settings in the sample project: 
+1. Check connection settings in the sample project.
 
-   ```Use your favourite text editor to open hivemigration-sample/build.gradle```
+   Use your favourite text editor to open *hivemigration-sample/build.gradle*
 
    ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/build.gradle.png)
 
 1. Ensure your [HIVE Server - HiveServer2](https://cwiki.apache.org/confluence/display/Hive/Setting+Up+HiveServer2) is running.
 
-1. Execute plugin
+1. Execute the plugin. It will create the schema and exeecute all migrations.
 
    ```hivemigration-sample$ gradle migrate```
 
    ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/migrate.png)
 
-1. Check content in the schema we have just created
+1. Let's see content in HIVE.
 
    ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/schemas.png)
 
