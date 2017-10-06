@@ -1,21 +1,63 @@
-## HiveMigration
+# HiveMigration
 
-HiveMigration is a Gradle plugin in order to support Database Migrations best practice when using HIVE.
+HiveMigration is a Gradle plugin with the sole purpose of supporting Database Migrations best practice on HIVE.
 
-## Scope
+# Concepts 
 
-This plugin implements database migration principles for HIVE databases.
+## Migrations
+
+Database Migrations is about updating the database from one version to the next using migrations (migration scripts).
+
+Migrations are written in HIVE QL and can consist of multiple statements.
+
+Within a single migration, all statements are run within a single transaction.
+
+## Metadata table
+
+To keep track of which migrations have already been applied when and by whom, a special bookkeeping table is added to your schema. 
+
+Metadata table also tracks whether or not the migrations were successful. 
+
+In case a migration was not successfull, it will be re-tried the next time the plugin is executed.
+
+# How it works
+
+1. HIVEMigrate creates the HIVE schema/database, if it does not exist yet.
+
+1. HIVEMigrate creates the metadata table, if it does not exist yet.
+
+1. HIVEMigrate queries the file system looking for migration scripts.
+
+1. HiveMigrate executes all remaining scripts so the schema/database structure reaches the level you desire. 
+
+   HIVE schema can be migrated to a predefined version or to the latest version available. It is just up to you.
+
+# Example
+
+1. Download repository to your computer
+
+$ git clone https://github.com/fbucci1/hivemigration.git
+
+1. Ensure you have [HIVE Server HiveServer2](https://cwiki.apache.org/confluence/display/Hive/Setting+Up+HiveServer2) running.
+
+1. Build and install the plugin in your local Maven repository.
+
+hivemigration-gradle-plugin$ gradle install
+
+1. Check connection settings in the sample project: hivemigration-sample/build.gradle
+
+[[https://github.com/fbucci1/hivemigration/blob/master/resources/build.gradle.png]]
 
 
-## Contributing
+# Contributing
 
-#Bug reports
-Have you found a bug? Please let us know in the [Issue Tracker|https://github.com/fbucci1/hivemigration/issues].
+## Report Bugs
+Have you found a bug? Please let us know in the [Issue Tracker](https://github.com/fbucci1/hivemigration/issues).
 
 If someone else already submitted an issue for the feature, leave a comment with +1.
 
-#Feature requests
-Do you have an idea for a great feature? Please let us know in the [Issue Tracker|https://github.com/fbucci1/hivemigration/issues].
+## Request features
+Do you have an idea for a great feature? Please let us know in the [Issue Tracker](https://github.com/fbucci1/hivemigration/issues).
 Make sure to do the following:
 * be as specific as possible
 * provide examples (so other people can better visualize what you mean)
@@ -25,12 +67,14 @@ In general try to focus on quick wins, with a broad appeal.
 
 If someone else already submitted an issue for the feature, leave a comment with +1.
 
-#Write code
+## Write code
 Is there an issue in the issue tracker that you would like to fix? 
 Is there an new feature that you would like to implement?
-Great! Just fork our [GitHub repository|https://github.com/fbucci1/hivemigration], write your code and, when you are done, create a pull request.
+Great! Just fork our [GitHub repository](https://github.com/fbucci1/hivemigration), write your code and, when you are done, create a pull request.
 
-## Resources
+# Resources
+
+## Database Migrations
 
 * http://enterprisecraftsmanship.com/2015/08/10/database-versioning-best-practices/
 
@@ -43,7 +87,7 @@ These are projects that support database migrations. However, none of them curre
 * https://github.com/fluentmigrator/fluentmigrator
 * https://github.com/vkhorikov/DatabaseUpgradeTool
 
-## License
+# License
 
    Copyright 2017 Fernando Raul Bucci
 
