@@ -17,10 +17,10 @@
 -- Sample values: https://flywaydb.org/getstarted/how
 --    seq: Timestamp when script started executing (System.currentTimeMillis())
 --    version: Database version. Retrieved from file name. 0 for R files.
---    script: name of the script file.
---    installed_by: user.
---    installed_on: timestamp when script started being executed.
---    execution_time: milliseconds ellapsed for the execution of the script.
+--    script: Name of the script file.
+--    installed_by: User for HIVE connection.
+--    installed_on: Timestamp when script started being executed.
+--    execution_time: Milliseconds ellapsed for the execution of the script.
 --    success: 1 ok, 0 error.
 
 CREATE TABLE ${schema}.${table} (
