@@ -14,12 +14,11 @@
    limitations under the License.
 */
 
-package ar.fb.gradle.plugins.hivemigration
+package org.hivemigration.gradle.plugins.hivemigration
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-
-import ar.fb.gradle.plugins.hivemigration.tasks.MigrateTask
+import org.hivemigration.gradle.plugins.hivemigration.tasks.MigrateTask
 
 class HiveMigrationPlugin implements Plugin<Project> {
 

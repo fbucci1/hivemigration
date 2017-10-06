@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts;
+package org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts;
 
 import java.sql.Statement;
 import java.util.List;

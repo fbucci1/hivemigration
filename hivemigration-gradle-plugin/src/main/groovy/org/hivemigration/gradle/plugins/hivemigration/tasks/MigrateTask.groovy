@@ -14,9 +14,9 @@
    limitations under the License.
 */
 
-package ar.fb.gradle.plugins.hivemigration.tasks;
+package org.hivemigration.gradle.plugins.hivemigration.tasks;
 
-import ar.fb.gradle.plugins.hivemigration.core.internal.migrate.Migrate
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.Migrate
 
 class MigrateTask extends AbstractTask {
 

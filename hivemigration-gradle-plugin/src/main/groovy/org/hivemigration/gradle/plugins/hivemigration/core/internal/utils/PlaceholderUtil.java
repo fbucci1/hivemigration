@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package ar.fb.gradle.plugins.hivemigration.core.internal.utils;
+package org.hivemigration.gradle.plugins.hivemigration.core.internal.utils;
 
 import java.util.Map;
 

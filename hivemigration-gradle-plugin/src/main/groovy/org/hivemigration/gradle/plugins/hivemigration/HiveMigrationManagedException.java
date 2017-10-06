@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package ar.fb.gradle.plugins.hivemigration;
+package org.hivemigration.gradle.plugins.hivemigration;
 
 public class HiveMigrationManagedException extends RuntimeException {
 

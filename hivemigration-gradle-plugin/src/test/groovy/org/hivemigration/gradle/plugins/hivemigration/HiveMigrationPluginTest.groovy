@@ -14,15 +14,15 @@
    limitations under the License.
 */
 
-package ar.fb.gradle.plugins.hivemigration
+package org.hivemigration.gradle.plugins.hivemigration
 
 import org.gradle.api.Project;
 import org.gradle.testfixtures.ProjectBuilder;
+import org.hivemigration.gradle.plugins.hivemigration.HiveMigrationExtension
+import org.hivemigration.gradle.plugins.hivemigration.HiveMigrationPlugin
+import org.hivemigration.gradle.plugins.hivemigration.tasks.AbstractTask
+import org.hivemigration.gradle.plugins.hivemigration.tasks.MigrateTask
 import org.junit.Test
-
-import ar.fb.gradle.plugins.hivemigration.HiveMigrationExtension
-import ar.fb.gradle.plugins.hivemigration.tasks.AbstractTask
-import ar.fb.gradle.plugins.hivemigration.tasks.MigrateTask
 
 import static org.junit.Assert.*
 

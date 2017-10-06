@@ -22,7 +22,7 @@ buildscript {
 		mavenLocal()
 	}
 	dependencies { 
-		classpath "ar.fb.gradle.plugins.hivemigration:hivemigration-gradle-plugin:0.0.1" 
+		classpath "org.hivemigration.gradle.plugins.hivemigration:hivemigration-gradle-plugin:0.0.1" 
 	}
 }
 

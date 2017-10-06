@@ -17,7 +17,7 @@
 ext {
     meta = [:]
     meta.versionName = '0.0.1'
-    meta.group = 'ar.fb.gradle.plugins.hivemigration'
+    meta.group = 'org.hivemigration.gradle.plugins.hivemigration'
     meta.pomArtifactId = 'hivemigration-gradle-plugin'
     meta.javaCompatibility = 1.8
     meta.gitHubUsername = 'fbucci1'

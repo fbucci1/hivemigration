@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package ar.fb.gradle.plugins.hivemigration.core.internal.utils.files;
+package org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.files;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +23,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 
-import ar.fb.gradle.plugins.hivemigration.HiveMigrationManagedException;
+import org.hivemigration.gradle.plugins.hivemigration.HiveMigrationManagedException;
 
 public class FileUtil {
 

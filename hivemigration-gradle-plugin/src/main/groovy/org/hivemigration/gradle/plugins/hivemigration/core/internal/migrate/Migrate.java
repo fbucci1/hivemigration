@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package ar.fb.gradle.plugins.hivemigration.core.internal.migrate;
+package org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate;
 
 import java.io.File;
 import java.sql.Connection;
@@ -22,9 +22,8 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.JDBCUtil;
-import ar.fb.gradle.plugins.hivemigration.tasks.AbstractTask;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.JDBCUtil;
+import org.hivemigration.gradle.plugins.hivemigration.tasks.AbstractTask;
 
 public class Migrate {
 

@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package ar.fb.gradle.plugins.hivemigration.tasks;
+package org.hivemigration.gradle.plugins.hivemigration.tasks;
 
 import java.io.File;
 import java.util.HashMap;
@@ -26,11 +26,10 @@ import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskAction;
-
-import ar.fb.gradle.plugins.hivemigration.HiveMigrationExtension;
-import ar.fb.gradle.plugins.hivemigration.HiveMigrationManagedException;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.PlaceholderUtil;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil;
+import org.hivemigration.gradle.plugins.hivemigration.HiveMigrationExtension;
+import org.hivemigration.gradle.plugins.hivemigration.HiveMigrationManagedException;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.PlaceholderUtil;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil;
 
 public abstract class AbstractTask extends DefaultTask {
 

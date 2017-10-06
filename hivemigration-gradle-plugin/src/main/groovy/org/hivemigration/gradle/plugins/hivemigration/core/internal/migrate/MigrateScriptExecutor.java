@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package ar.fb.gradle.plugins.hivemigration.core.internal.migrate;
+package org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate;
 
 import java.io.File;
 import java.sql.Connection;
@@ -31,15 +31,14 @@ import java.util.TreeMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import ar.fb.gradle.plugins.hivemigration.HiveMigrationManagedException;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.PlaceholderUtil;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.files.FileUtil;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.JDBCUtil;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.SQLStatement;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptParseUtil;
-import ar.fb.gradle.plugins.hivemigration.tasks.AbstractTask;
+import org.hivemigration.gradle.plugins.hivemigration.HiveMigrationManagedException;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.PlaceholderUtil;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.files.FileUtil;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.JDBCUtil;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.SQLStatement;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptParseUtil;
+import org.hivemigration.gradle.plugins.hivemigration.tasks.AbstractTask;
 
 public class MigrateScriptExecutor {
 

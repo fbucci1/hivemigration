@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts;
+package org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,9 +29,8 @@ import org.apache.hive.jdbc.HiveDriver;
 import org.apache.hive.jdbc.Utils.JdbcConnectionParams;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import ar.fb.gradle.plugins.hivemigration.HiveMigrationManagedException;
-import ar.fb.gradle.plugins.hivemigration.tasks.AbstractTask;
+import org.hivemigration.gradle.plugins.hivemigration.HiveMigrationManagedException;
+import org.hivemigration.gradle.plugins.hivemigration.tasks.AbstractTask;
 
 public class JDBCUtil {
 

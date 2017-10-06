@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package ar.fb.gradle.plugins.hivemigration.core.internal.migrate;
+package org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -25,14 +25,13 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.PlaceholderUtil;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.files.ResourceUtil;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.SQLStatement;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.JDBCUtil;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptParseUtil;
-import ar.fb.gradle.plugins.hivemigration.tasks.AbstractTask;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.PlaceholderUtil;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.files.ResourceUtil;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.JDBCUtil;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.SQLStatement;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptParseUtil;
+import org.hivemigration.gradle.plugins.hivemigration.tasks.AbstractTask;
 
 public class MigrateSchemaCreator {
 	static final Logger logger = LogManager.getLogger(MigrateSchemaCreator.class.getName());
