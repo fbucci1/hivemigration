@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.TreeMap;
 
 import org.apache.logging.log4j.LogManager;
@@ -28,7 +29,10 @@ public class MigrateScriptExecutor {
 
 	static final Logger logger = LogManager.getLogger(MigrateScriptExecutor.class.getName());
 
-	static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+	static {
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+	}
 
 	public static void executeScripts(Map<String, String> config, Connection con, File schemaFolder) {
 		//
@@ -75,7 +79,7 @@ public class MigrateScriptExecutor {
 				"(?,?,?,?,?,?,?)";
 		//
 		List<Object> values = new ArrayList<Object>();
-		values.add(System.currentTimeMillis());
+		values.add(initTime);
 		values.add(version);
 		values.add(file.getName());
 		values.add(sdf.format(new Date(initTime)));
