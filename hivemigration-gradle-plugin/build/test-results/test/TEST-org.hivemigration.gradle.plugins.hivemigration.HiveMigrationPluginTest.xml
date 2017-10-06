@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.hivemigration.gradle.plugins.hivemigration.HiveMigrationPluginTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2017-10-06T18:40:27" hostname="hadoopsandbox" time="30.659">
+<testsuite name="org.hivemigration.gradle.plugins.hivemigration.HiveMigrationPluginTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2017-10-06T18:59:59" hostname="hadoopsandbox" time="5.496">
   <properties/>
-  <testcase name="hivemigrationPluginAddsExtensionToProject" classname="org.hivemigration.gradle.plugins.hivemigration.HiveMigrationPluginTest" time="4.18"/>
-  <testcase name="hivemigrationPluginAddsMigrateTaskToProject" classname="org.hivemigration.gradle.plugins.hivemigration.HiveMigrationPluginTest" time="0.035"/>
-  <testcase name="hivemigrationPluginExecuteMigrate" classname="org.hivemigration.gradle.plugins.hivemigration.HiveMigrationPluginTest" time="26.442"/>
+  <testcase name="hivemigrationPluginAddsExtensionToProject" classname="org.hivemigration.gradle.plugins.hivemigration.HiveMigrationPluginTest" time="5.047"/>
+  <testcase name="hivemigrationPluginAddsMigrateTaskToProject" classname="org.hivemigration.gradle.plugins.hivemigration.HiveMigrationPluginTest" time="0.062"/>
+  <testcase name="hivemigrationPluginExecuteMigrate" classname="org.hivemigration.gradle.plugins.hivemigration.HiveMigrationPluginTest" time="0.386"/>
   <system-out><![CDATA[Executing MigrateTask_Decorated task!
-20:40:32.408 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil - Using environment variable: MIGRATE_DB_USER
-20:40:32.411 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil - Using environment variable: MIGRATE_DB_PASSWORD
-20:40:32.422 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.JDBCUtil - Instantiating JDBC driver
-20:40:32.465 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.JDBCUtil - Connecting to jdbc:hive2://localhost:10000
-20:40:33.205 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.MigrateSchemaCreator - Schema already exists: STAGE_UAT
-20:40:33.261 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.MigrateMetadataTableCreator - Metadata table already exists: VERSIONING_METADATA
-20:40:58.449 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.MigrateScriptExecutor - Current version in schema is 3. Target is 2
-20:40:58.452 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.MigrateScriptExecutor - Ignoring script: V1__create_sample_table_1.sql
-20:40:58.453 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.MigrateScriptExecutor - Ignoring script: V2__create_sample_table_2.sql
-20:40:58.453 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.MigrateScriptExecutor - Ignoring script: V3__create_sample_table_3.sql
+21:00:05.245 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil - Using environment variable: MIGRATE_DB_USER
+21:00:05.247 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil - Using environment variable: MIGRATE_DB_PASSWORD
+21:00:05.269 INFO  org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.Migrate - location folder does not exist (/home/administrator/github/hivemigration/hivemigration-gradle-plugin/../hivemigration-sample/db/changelog). There is nothing left to do.
 Task MigrateTask_Decorated finished.
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

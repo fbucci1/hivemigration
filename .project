@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>hivemigration-gradle-sample</name>
-	<comment>Project hadoop-repo-template created by Buildship.</comment>
+	<name>hivemigration</name>
+	<comment>Project hivemigration created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
