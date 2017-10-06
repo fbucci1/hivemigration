@@ -46,7 +46,7 @@ hivemigration-gradle-plugin$ gradle install
 
 1. Check connection settings in the sample project: hivemigration-sample/build.gradle
 
-[[https://github.com/fbucci1/hivemigration/raw/master/doc/build.gradle.png|alt=alt]]
+[[https://github.com/fbucci1/hivemigration/raw/master/doc/build.gradle.png]]
 
 
 # Contributing
