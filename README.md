@@ -28,8 +28,6 @@ In case a migration was not successfull, it will be re-tried the next time the p
 
 1. HiveMigrate executes all remaining scripts so the schema/database structure reaches the level you desire. 
 
-   HIVE schema can be migrated to a predefined version or to the latest version available. It is just up to you.
-
 # Example
 
 1. Download the repository to your computer.
