@@ -32,8 +32,3 @@ CREATE TABLE ${schema}.${table} (
     execution_time BIGINT,
     success DECIMAL(1)
 );
-
---ALTER TABLE ${schema}.${table} ADD CONSTRAINT ${table}_pk PRIMARY KEY (installed_rank);
-
---CREATE INDEX ${schema}.${table}_s_idx ON ${schema}.${table} ("success");
-
