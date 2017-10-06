@@ -2,9 +2,19 @@
 
 HiveMigration is a Gradle plugin in order to support Database Migrations best practice when using HIVE.
 
-# Scope
+# How it works
 
-This plugin implements database migration principles for HIVE databases.
+1. HIVEMigrate creates the HIVE schema/database, if it does not exist yet.
+
+1. HIVEMigrate creates the metadata table, if it does not exist yet.
+
+   The Metadata table is a regular table whose purpose is to store information on all scripts that have been executed so far. 
+
+1. HIVEMigrate queries the file system looking for migration scripts.
+
+1. HiveMigrate executes all remaining scripts so the schema/database structure reaches the level you desire. 
+
+   HIVE schema can be migrated to a predefined version or to the latest version available. It is just up to you.
 
 # Contributing
 
