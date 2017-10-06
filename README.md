@@ -36,18 +36,29 @@ In case a migration was not successfull, it will be re-tried the next time the p
 
 1. Download repository to your computer
 
-$ git clone https://github.com/fbucci1/hivemigration.git
+   ```$ git clone https://github.com/fbucci1/hivemigration.git```
 
 1. Ensure you have [HIVE Server HiveServer2](https://cwiki.apache.org/confluence/display/Hive/Setting+Up+HiveServer2) running.
 
 1. Build and install the plugin in your local Maven repository.
 
-hivemigration-gradle-plugin$ gradle install
+   ```hivemigration-gradle-plugin$ gradle install```
 
 1. Check connection settings in the sample project: hivemigration-sample/build.gradle
 
-[[https://github.com/fbucci1/hivemigration/blob/master/resources/build.gradle.png]]
+   ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/build.gradle.png)
 
+1. Execute plugin
+
+   ```hivemigration-sample$ gradle migrate```
+
+   ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/migrate.png)
+
+1. Check content in the schema we have just created
+
+   ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/schemas.png)
+
+   ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/metadata.png)
 
 # Contributing
 
