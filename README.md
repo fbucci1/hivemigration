@@ -64,6 +64,29 @@ In case a migration was not successfull, it will be re-tried the next time the p
 
    ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/metadata.png)
 
+# Documentation
+
+## Configuration
+
+|Name|Type|Description|
+|---|---|---|
+|url|String|The jdbc url to use to connect to the database. Mandatory.|
+|driver|String|The driver to use to connect to the database. Optional. Defaults to org.apache.hive.jdbc.HiveDriver|
+|ENV|String|The environment to use. Mandatory.|
+|user|String|The user to use to connect to the database. Optional. Defaults to "".|
+|password|String|The password to use to connect to the database. Optional. Defaults to "".|
+|schema|String|The name of the schema. Mandatory.|
+|table|String|The name of the table used for metadata. Optional. Defaults to "VERSIONING_METADATA".|
+|projectRoot|String|Project root folder. Optional. Defaults to gradlew file.|
+|location|String|Relative path to the location to scan for migrations. Optional. Defaults to "db/changelog".|
+|target|String|The target version up to which should consider migrations. Use null if latest.|
+
+## Metadata table
+
+|Name|Type|Description|
+|---|---|---|
+|aaa|aaa|aaa|
+
 # Contributing
 
 ## Report Bugs
