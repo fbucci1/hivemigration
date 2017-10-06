@@ -44,7 +44,7 @@ In case a migration was not successfull, it will be re-tried the next time the p
 
 1. Check connection settings in the sample project.
 
-   Use your favourite text editor to open *hivemigration-sample/build.gradle*
+   Use your favourite text editor to open ´hivemigration-sample/build.gradle´
 
    ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/build.gradle.png)
 
@@ -85,7 +85,7 @@ Properties in the build.gradle file:
 
 Environment variables:
 
-|Name|Type|Description|
+|Name|Description|
 |---|---|
 |ENV|The environment to use. Mandatory.|
 |user|The user to use to connect to the database. Optional. Defaults to "".|
@@ -97,11 +97,11 @@ Properties in command line:
 
 As shown in the example above, properties can be passed from the command line. For instance: 
 
-´´´gradle migrate -Puser=HeyItIsMe´´´
+   ´´´gradle migrate -Puser=HeyItIsMe´´´
 
 In order for the plugin to read the corresponding property, findProperty() method can be used. For instance:   
 
-   ´´´user=findProperty("user")´´´
+   ´user=findProperty("user")´
 
 ## Metadata table
 
