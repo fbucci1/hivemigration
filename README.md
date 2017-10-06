@@ -60,6 +60,8 @@ In case a migration was not successfull, it will be re-tried the next time the p
 
    ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/schemas.png)
 
+   ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/tables.png)
+
    ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/metadata.png)
 
 # Contributing
