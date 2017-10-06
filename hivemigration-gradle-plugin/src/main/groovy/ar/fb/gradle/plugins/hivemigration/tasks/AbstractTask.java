@@ -17,9 +17,7 @@
 package ar.fb.gradle.plugins.hivemigration.tasks;
 
 import java.io.File;
-import java.sql.Statement;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,7 +30,6 @@ import org.gradle.api.tasks.TaskAction;
 import ar.fb.gradle.plugins.hivemigration.HiveMigrationExtension;
 import ar.fb.gradle.plugins.hivemigration.HiveMigrationManagedException;
 import ar.fb.gradle.plugins.hivemigration.core.internal.utils.PlaceholderUtil;
-import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.SQLStatement;
 import ar.fb.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil;
 
 public abstract class AbstractTask extends DefaultTask {
