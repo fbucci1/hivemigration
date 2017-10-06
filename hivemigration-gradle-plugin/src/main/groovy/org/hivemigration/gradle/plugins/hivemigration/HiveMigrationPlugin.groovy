@@ -25,8 +25,8 @@ class HiveMigrationPlugin implements Plugin<Project> {
 	public static final NAME = HiveMigrationExtension.NAME + "-gradle-plugin"
 
 	@Override
-	void apply(Project target) {
-		HiveMigrationExtension extension = target.extensions.create(HiveMigrationExtension.NAME, HiveMigrationExtension)
-		target.task(MigrateTask.TASK_NAME, type: MigrateTask)
+	void apply(Project project) {
+		HiveMigrationExtension extension = project.extensions.create(HiveMigrationExtension.NAME, HiveMigrationExtension)
+		project.task(MigrateTask.TASK_NAME, type: MigrateTask)
 	}
 }

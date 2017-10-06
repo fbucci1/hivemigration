@@ -183,7 +183,7 @@ public abstract class AbstractTask extends DefaultTask {
 		if (config.get(KEY_TABLE) == null)
 			config.put(KEY_TABLE, "VERSIONING_METADATA");
 		if (config.get(KEY_PROJECT_ROOT) == null)
-			config.put(KEY_PROJECT_ROOT, (new File(".")).getAbsolutePath());
+			config.put(KEY_PROJECT_ROOT, getProject().getProjectDir().getAbsolutePath());
 		if (config.get(KEY_LOCATION) == null)
 			config.put(KEY_LOCATION, "db/changelog");
 		// KEY_TARGET has defaults to null

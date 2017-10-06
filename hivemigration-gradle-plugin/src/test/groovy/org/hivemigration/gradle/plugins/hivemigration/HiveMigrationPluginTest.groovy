@@ -17,41 +17,46 @@
 package org.hivemigration.gradle.plugins.hivemigration
 
 import org.gradle.api.Project;
+
 import org.gradle.testfixtures.ProjectBuilder;
 import org.hivemigration.gradle.plugins.hivemigration.HiveMigrationExtension
 import org.hivemigration.gradle.plugins.hivemigration.HiveMigrationPlugin
 import org.hivemigration.gradle.plugins.hivemigration.tasks.AbstractTask
 import org.hivemigration.gradle.plugins.hivemigration.tasks.MigrateTask
+import org.junit.BeforeClass
 import org.junit.Test
 
 import static org.junit.Assert.*
 
 class HiveMigrationPluginTest {
-
+	
+	static Project project;
+	
+	@BeforeClass
+	public static void setUp() {
+		project = ProjectBuilder.builder().build();
+		project.pluginManager.apply HiveMigrationPlugin.NAME;
+	}
+	
+			
 	@Test
 	public void hivemigrationPluginAddsMigrateTaskToProject() {
-		Project project = ProjectBuilder.builder().build()
-		project.pluginManager.apply HiveMigrationPlugin.NAME
-		assertTrue(project.tasks.migrate instanceof MigrateTask)
+		assertTrue(project.tasks.migrate instanceof MigrateTask);
 	}
 
 	@Test
 	public void hivemigrationPluginAddsExtensionToProject() {
-		Project project = ProjectBuilder.builder().build()
-		project.pluginManager.apply HiveMigrationPlugin.NAME
-		assertTrue(project.extensions[HiveMigrationExtension.NAME] instanceof HiveMigrationExtension)
+		assertTrue(project.extensions[HiveMigrationExtension.NAME] instanceof HiveMigrationExtension);
 	}
 
 	@Test
 	public void hivemigrationPluginExecuteMigrate() {
-		Project project = ProjectBuilder.builder().build()
-		project.pluginManager.apply HiveMigrationPlugin.NAME
-		project.tasks.migrate.setConfiguration(AbstractTask.KEY_URL,"jdbc:hive2://localhost:10000")
-		project.tasks.migrate.setConfiguration(AbstractTask.KEY_ENV,"UAT")
-		project.tasks.migrate.setConfiguration(AbstractTask.KEY_SCHEMA,"STAGE_\${ENV}")
-		project.tasks.migrate.setConfiguration(AbstractTask.KEY_PROJECT_ROOT,"../hivemigration-sample")
-		project.tasks.migrate.setConfiguration(AbstractTask.KEY_LOCATION,"db/changelog")
-		project.tasks.migrate.setConfiguration(AbstractTask.KEY_TARGET,"2")
+		project.tasks.migrate.setConfiguration(AbstractTask.KEY_URL,"jdbc:hive2://localhost:10000");
+		project.tasks.migrate.setConfiguration(AbstractTask.KEY_ENV,"UAT");
+		project.tasks.migrate.setConfiguration(AbstractTask.KEY_SCHEMA,"STAGE_\${ENV}");
+		project.tasks.migrate.setConfiguration(AbstractTask.KEY_PROJECT_ROOT,"../hivemigration-sample");
+		project.tasks.migrate.setConfiguration(AbstractTask.KEY_LOCATION,"db/changelog");
+		project.tasks.migrate.setConfiguration(AbstractTask.KEY_TARGET,"2");
 		project.tasks.migrate.execute()
 	}
 }

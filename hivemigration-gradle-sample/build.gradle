@@ -32,5 +32,5 @@ hivemigration {
 	password=findProperty("password")	// Reads argument -Ppassword=xxx
 	ENV=findProperty("ENV")     		// Reads argument -PENV=xxx
 	schema="STAGE_\${ENV}"
-	location="hivemigration-gradle-sample/db/changelog"
+	location="db/changelog"
 }
