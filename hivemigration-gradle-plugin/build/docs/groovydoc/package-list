@@ -1,6 +1,0 @@
-org.hivemigration.gradle.plugins.hivemigration
-org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate
-org.hivemigration.gradle.plugins.hivemigration.core.internal.utils
-org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.files
-org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts
-org.hivemigration.gradle.plugins.hivemigration.tasks
