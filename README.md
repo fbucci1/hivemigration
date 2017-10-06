@@ -10,13 +10,11 @@ This plugin implements database migration principles for HIVE databases.
 ## Contributing
 
 #Bug reports
------------
 Have you found a bug? Please let us know in the [Issue Tracker|https://github.com/fbucci1/hivemigration/issues].
 
 If someone else already submitted an issue for the feature, leave a comment with +1.
 
 #Feature requests
------------------
 Do you have an idea for a great feature? Please let us know in the [Issue Tracker|https://github.com/fbucci1/hivemigration/issues].
 Make sure to do the following:
 * be as specific as possible
@@ -28,7 +26,6 @@ In general try to focus on quick wins, with a broad appeal.
 If someone else already submitted an issue for the feature, leave a comment with +1.
 
 #Write code
-----------
 Is there an issue in the issue tracker that you would like to fix? 
 Is there an new feature that you would like to implement?
 Great! Just fork our [GitHub repository|https://github.com/fbucci1/hivemigration], write your code and, when you are done, create a pull request.
