@@ -38,11 +38,11 @@ In case a migration was not successfull, it will be re-tried the next time the p
 
 1. Build and install the HiveMigration plugin in your local Maven repository.
 
-   ```hivemigration-gradle-plugin$ gradle install```
+   ```hivemigration$ gradle install```
 
 1. Check connection settings in the sample project.
 
-   Use your favourite text editor to open `hivemigration-sample/build.gradle`
+   Use your favourite text editor to open `hivemigration-gradle-sample/build.gradle`
 
    ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/build.gradle.png)
 
@@ -50,7 +50,7 @@ In case a migration was not successfull, it will be re-tried the next time the p
 
 1. Execute the plugin. It will create the schema and exeecute all migrations.
 
-   ```hivemigration-sample$ gradle migrate```
+   ```hivemigration$ gradle migrate```
 
    ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/migrate.png)
 
