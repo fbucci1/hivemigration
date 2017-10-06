@@ -98,7 +98,7 @@ public class MigrateScriptExecutor {
 		try {
 			stmt = JDBCUtil.createStatement(con);
 			//
-			String sql = "Select max(version) from ${schema}.${table}";
+			String sql = "Select version from ${schema}.${table} where success=1 order by version desc limit 1";
 			//
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("ENV", config.get(AbstractTask.KEY_ENV));
