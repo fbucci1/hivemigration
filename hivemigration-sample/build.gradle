@@ -28,9 +28,8 @@ buildscript {
 
 hivemigration {
 	url="jdbc:hive2://localhost:10000"
-	schema="STAGE_\${ENV}"
-	ENV=findProperty("UAT")     		// Reads argument -PENV=xxx
-	user=findProperty("user")			// Reads argument -Pusername=xxx
+	user=findProperty("user")			// Reads argument -Puser=xxx
 	password=findProperty("password")	// Reads argument -Ppassword=xxx
+	ENV=findProperty("ENV")     		// Reads argument -PENV=xxx
+	schema="STAGE_\${ENV}"
 }
-
