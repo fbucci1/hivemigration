@@ -1,7 +1,15 @@
 /.idea/
-/.gradle/
 /.repo/
-build
 *.iml
+
+# Eclipse
+.project
+.classpath
+.settings
+bin
+
+#
+.gradle
 gradle.properties
-/bin/
+build
+
