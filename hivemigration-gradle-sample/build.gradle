@@ -30,5 +30,4 @@ hivemigration {
 	password=findProperty("password")	// Reads argument -Ppassword=xxx
 	ENV=findProperty("ENV")     		// Reads argument -PENV=xxx
 	schema="STAGE_\${ENV}"
-	location="db/changelog"
 }

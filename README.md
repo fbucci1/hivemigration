@@ -38,6 +38,8 @@ In case a migration was not successfull, it will be re-tried the next time the p
 
    ```hivemigration-gradle-plugin$ gradle install```
 
+   ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/install.png)
+
 1. Check connection settings in the sample project.
 
    Use your favourite text editor to open `hivemigration-gradle-sample/build.gradle`
