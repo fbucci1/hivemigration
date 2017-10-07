@@ -48,6 +48,8 @@ In case a migration was not successfull, it will be re-tried the next time the p
 
 1. Ensure your [HIVE Server - HiveServer2](https://cwiki.apache.org/confluence/display/Hive/Setting+Up+HiveServer2) is running.
 
+   ![Image](https://github.com/fbucci1/hivemigration/raw/master/doc/beeline.png)
+
 1. Execute the plugin. It will create the schema and exeecute all migrations.
 
    ```hivemigration-gradle-sample$ gradle migrate```
