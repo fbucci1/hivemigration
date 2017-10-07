@@ -22,5 +22,6 @@ CREATE TABLE ${schema}.${table} (
     installed_by VARCHAR(100),
     installed_on VARCHAR(23),
     execution_time BIGINT,
-    success DECIMAL(1)
+    success DECIMAL(1),
+    error VARCHAR(100)
 );

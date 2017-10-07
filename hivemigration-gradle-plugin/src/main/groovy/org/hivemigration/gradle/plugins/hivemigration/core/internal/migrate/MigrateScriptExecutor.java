@@ -83,27 +83,27 @@ public class MigrateScriptExecutor {
 				logger.info("Ignoring script: " + file.getName());
 			} else {
 				//
-				int success = 0;
 				long initTime = System.currentTimeMillis();
-				try {
-					success = executeScript(config, con, version, file);
-				} catch (NullPointerException e) {
-				}
+				String errorMsg = executeScript(config, con, version, file);
 				long endTime = System.currentTimeMillis();
 				//
 				long executionTime = endTime - initTime;
-				insertRowInMetadataTable(config, con, version, file, initTime, executionTime, success);
+				boolean success = errorMsg != null && !(errorMsg.trim().equals(""));
+				insertRowInMetadataTable(config, con, version, file, initTime, executionTime, success, errorMsg);
+				if (!success) {
+					return;
+				}
 			}
 			//
 		}
 	}
 
 	private static void insertRowInMetadataTable(Map<String, String> config, Connection con, Integer version, File file,
-			long initTime, long executionTime, int success) {
+			long initTime, long executionTime, boolean success, String errorMsg) {
 		//
 		String sql = "INSERT INTO ${schema}.${table} " + //
-				"(seq,version,script,installed_by,installed_on,execution_time,success) values " + //
-				"(?,?,?,?,?,?,?)";
+				"(seq,version,script,installed_by,installed_on,execution_time,success,error) values " + //
+				"(?,?,?,?,?,?,?,?)";
 		//
 		List<Object> values = new ArrayList<Object>();
 		values.add(initTime);
@@ -112,7 +112,8 @@ public class MigrateScriptExecutor {
 		values.add(config.get(AbstractTask.KEY_USER));
 		values.add(sdf.format(new Date(initTime)));
 		values.add(executionTime);
-		values.add(success);
+		values.add(success ? 1 : 0);
+		values.add(errorMsg.length() < 100 ? errorMsg : errorMsg.substring(0, 100));
 		//
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("ENV", config.get(AbstractTask.KEY_ENV));
@@ -156,7 +157,7 @@ public class MigrateScriptExecutor {
 		return initialVersion;
 	}
 
-	private static int executeScript(Map<String, String> config, Connection con, Integer version, File file) {
+	private static String executeScript(Map<String, String> config, Connection con, Integer version, File file) {
 		//
 		Statement stmt = null;
 		try {

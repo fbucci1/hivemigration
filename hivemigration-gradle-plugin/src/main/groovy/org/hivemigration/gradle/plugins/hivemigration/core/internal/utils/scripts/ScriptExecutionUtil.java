@@ -28,7 +28,7 @@ public class ScriptExecutionUtil {
 
 	static final Logger logger = LogManager.getLogger(ScriptExecutionUtil.class.getName());
 
-	public static int executeScript(Map<String, String> config, Statement stmt, Integer scriptVersion,
+	public static String executeScript(Map<String, String> config, Statement stmt, Integer scriptVersion,
 			String scriptName, List<SQLStatement> statements) {
 		//
 		logger.info("Executing script: " + scriptName);
@@ -42,12 +42,12 @@ public class ScriptExecutionUtil {
 			try {
 				JDBCUtil.execute(stmt, s.sql);
 			} catch (HiveMigrationManagedException e) {
-				return 0;
+				return e.toString();
 			}
 			//
 		}
 		//
-		return 1;
+		return null;
 	}
 
 }
