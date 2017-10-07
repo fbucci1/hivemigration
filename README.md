@@ -80,7 +80,7 @@ In case a migration was not successfull, it will be re-tried the next time the p
 |schema|String|The name of the schema. Mandatory.|
 |table|String|The name of the table used for metadata. Optional. Defaults to "VERSIONING_METADATA".|
 |projectDir|String|Directory containing project build file.|
-|location|String|Relative path to the location to scan for migrations. Optional. Defaults to "db/changelog".|
+|location|String|Relative path to the location to scan for migrations. Optional. Defaults to `db/changelog`.|
 |target|Integer|The target version up to which should consider migrations. Use null if latest.|
 
 ### Environment variables
@@ -115,6 +115,20 @@ In order for the plugin to read the corresponding property, findProperty() metho
 |execution_time|BIGINT|Milliseconds ellapsed for the execution of the script.|
 |success|DECIMAL(1)|1 ok, 0 error.|
 |error|VARCHAR(100)|Error message.|
+
+## Migrations
+
+Migrations are the migration scripts used for updating the schema/database from a previous version to the next one. 
+
+Migrations are, by default, stored in the following folder: `db/changelog` -- See location property in build.gradle file.
+
+Filenames must match following pattern: `V(VersionNumber)__(Name).q`. 
+
+   Notice VersionNumber must be an integer greater than 0. 
+  
+   It is recommended to start with VersionNumber equals to 1 for the first migration, and increment it one by one whithout leaving unused gaps.
+   
+   As a general rule, migrations should never be changed once tested and distributed.
 
 # Contributing
 
