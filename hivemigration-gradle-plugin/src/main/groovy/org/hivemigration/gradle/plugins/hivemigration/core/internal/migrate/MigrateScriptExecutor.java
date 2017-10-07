@@ -33,7 +33,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hivemigration.gradle.plugins.hivemigration.HiveMigrationManagedException;
 import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.PlaceholderUtil;
-import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.files.FileUtil;
+import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.files.ResourceUtil;
 import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.JDBCUtil;
 import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.SQLStatement;
 import org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.scripts.ScriptExecutionUtil;
@@ -156,7 +156,7 @@ public class MigrateScriptExecutor {
 		try {
 			stmt = JDBCUtil.createStatement(con);
 			//
-			String script = FileUtil.loadFile(file);
+			String script = ResourceUtil.loadFile(file);
 			String scriptName = file.getName();
 			//
 			Map<String, String> map = new HashMap<String, String>();

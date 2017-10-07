@@ -16,49 +16,78 @@
 
 package org.hivemigration.gradle.plugins.hivemigration.core.internal.utils.files;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 
 import org.hivemigration.gradle.plugins.hivemigration.HiveMigrationManagedException;
 import org.hivemigration.gradle.plugins.hivemigration.core.internal.migrate.Migrate;
 
 public class ResourceUtil {
 
-	// TODO IMPROVE ... a lot
 	public static String loadResource(String location) {
-		try {
-			ClassLoader classLoader = Migrate.class.getClassLoader();
-			//
-			InputStream is = classLoader.getResourceAsStream(location);
-			if (is == null) {
-				throw new HiveMigrationManagedException("Unable to load resource from classpath: " + location);
-			}
-			//
-			Reader reader = new InputStreamReader(is, "UTF-8");
-			//
-			StringWriter out = new StringWriter();
-			char[] buffer = new char[4096];
-			int charsRead;
-			while ((charsRead = reader.read(buffer)) != -1) {
-				out.write(buffer, 0, charsRead);
-			}
-			out.flush();
-			//
-			String aux = out.toString();
-			//
-			if (aux.startsWith("\ufeff")) { // BOM
-				aux = aux.substring(1);
-			}
-			//
-			reader.close();
-			is.close();
-			//
-			return aux;
-		} catch (Exception e) {
-			throw new HiveMigrationManagedException("Unable to load resource from classpath: " + location, e);
+		ClassLoader classLoader = Migrate.class.getClassLoader();
+		//
+		InputStream is = classLoader.getResourceAsStream(location);
+		if (is == null) {
+			throw new HiveMigrationManagedException("Unable to load resource from classpath: " + location);
 		}
+		//
+		try {
+			return readFromInputStream(is);
+		} catch (IOException e) {
+			throw new HiveMigrationManagedException("Unable to load resource from classpath: " + location, e);
+		} finally {
+			try {
+				is.close();
+			} catch (IOException e1) {
+			}
+		}
+	}
+
+	public static String loadFile(File file) {
+		InputStream is = null;
+		//
+		try {
+			is = new FileInputStream(file);
+			return readFromInputStream(is);
+		} catch (IOException e) {
+			throw new HiveMigrationManagedException("Unable to load file: " + file, e);
+		} finally {
+			try {
+				if (is != null) {
+					is.close();
+				}
+			} catch (IOException e1) {
+			}
+		}
+	}
+
+	private static String readFromInputStream(InputStream is) throws UnsupportedEncodingException, IOException {
+		Reader reader = new InputStreamReader(is, "UTF-8");
+		//
+		StringWriter out = new StringWriter();
+		char[] buffer = new char[4096];
+		int charsRead;
+		while ((charsRead = reader.read(buffer)) != -1) {
+			out.write(buffer, 0, charsRead);
+		}
+		out.flush();
+		//
+		String aux = out.toString();
+		//
+		if (aux.startsWith("\ufeff")) { // BOM
+			aux = aux.substring(1);
+		}
+		//
+		reader.close();
+		//
+		return aux;
 	}
 
 }
