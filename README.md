@@ -75,7 +75,7 @@ In case a migration was not successfull, it will be re-tried the next time the p
 |password|String|The password to use to connect to the database. Optional. Defaults to "".|
 |schema|String|The name of the schema. Mandatory.|
 |table|String|The name of the table used for metadata. Optional. Defaults to "VERSIONING_METADATA".|
-|projectRoot|String|Project root folder. Optional. Defaults to gradlew file.|
+|projectDir|String|Directory containing project build file.|
 |location|String|Relative path to the location to scan for migrations. Optional. Defaults to "db/changelog".|
 |target|Integer|The target version up to which should consider migrations. Use null if latest.|
 

@@ -31,12 +31,12 @@ public class Migrate {
 
 	public static void run(Map<String, String> config) {
 		//
-		String projectRoot = config.get(AbstractTask.KEY_PROJECT_ROOT);
+		String projectDir = config.get(AbstractTask.KEY_PROJECT_DIR);
 		String location = config.get(AbstractTask.KEY_LOCATION);
-		logger.debug("Project root: " + projectRoot + ", Location: " + location);
 		//
-		File locationFolder = new File(projectRoot, location);
+		File locationFolder = new File(projectDir, location);
 		if (!locationFolder.exists()) {
+			logger.info("projectDir: " + projectDir + ", location: " + location);
 			logger.info("location folder does not exist (" + locationFolder.getAbsolutePath()
 					+ "). There is nothing left to do.");
 			return;

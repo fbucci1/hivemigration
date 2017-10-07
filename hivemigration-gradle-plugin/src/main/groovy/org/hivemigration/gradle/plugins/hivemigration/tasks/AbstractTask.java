@@ -51,7 +51,7 @@ public abstract class AbstractTask extends DefaultTask {
 	// The name of the table used for metadata
 	public static final String KEY_TABLE = "table";
 	// The root folder to use
-	public static final String KEY_PROJECT_ROOT = "projectRoot";
+	public static final String KEY_PROJECT_DIR = "projectDir";
 	// Relative path to the location to scan for migrations
 	public static final String KEY_LOCATION = "location";
 	// The target version up to which should consider migrations
@@ -138,7 +138,7 @@ public abstract class AbstractTask extends DefaultTask {
 			config.put(KEY_PASSWORD, extension.password);
 			config.put(KEY_SCHEMA, extension.schema);
 			config.put(KEY_TABLE, extension.table);
-			config.put(KEY_PROJECT_ROOT, extension.projectRoot);
+			config.put(KEY_PROJECT_DIR, extension.projectDir);
 			config.put(KEY_LOCATION, extension.location);
 			config.put(KEY_TARGET, (extension.target == null ? null : extension.target.toString()));
 		}
@@ -164,7 +164,7 @@ public abstract class AbstractTask extends DefaultTask {
 		}
 		// KEY_SCHEMA cannot be loaded from env variables
 		// KEY_TABLE cannot be loaded from env variables
-		// KEY_PROJECT_ROOT cannot be loaded from env variables
+		// KEY_PROJECT_DIR cannot be loaded from env variables
 		// KEY_LOCATION cannot be loaded from env variables
 		// KEY_TARGET cannot be loaded from env variables
 	}
@@ -182,8 +182,8 @@ public abstract class AbstractTask extends DefaultTask {
 		// KEY_SCHEMA has no default value
 		if (config.get(KEY_TABLE) == null)
 			config.put(KEY_TABLE, "VERSIONING_METADATA");
-		if (config.get(KEY_PROJECT_ROOT) == null)
-			config.put(KEY_PROJECT_ROOT, getProject().getProjectDir().getAbsolutePath());
+		if (config.get(KEY_PROJECT_DIR) == null)
+			config.put(KEY_PROJECT_DIR, getProject().getProjectDir().getAbsolutePath());
 		if (config.get(KEY_LOCATION) == null)
 			config.put(KEY_LOCATION, "db/changelog");
 		// KEY_TARGET has defaults to null
@@ -207,7 +207,7 @@ public abstract class AbstractTask extends DefaultTask {
 		}
 		//
 		// KEY_TABLE skipped as it is not mandatory;
-		// KEY_PROJECT_ROOT skipped as it is not mandatory
+		// KEY_PROJECT_DIR skipped as it is not mandatory
 		// KEY_LOCATION skipped as it is not mandatory
 		// KEY_TARGET skipped as it is not mandatory
 	}

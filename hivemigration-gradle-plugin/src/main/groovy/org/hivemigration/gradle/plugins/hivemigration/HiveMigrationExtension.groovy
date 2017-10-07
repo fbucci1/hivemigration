@@ -34,8 +34,8 @@ class HiveMigrationExtension {
 		public String schema;
 		// The name of the table used for metadata. Optional. Defaults to "VERSIONING_METADATA".
 		public String table
-		// Project root folder. Optional. Defaults to gradlew file.
-		public String projectRoot;	
+		// Directory containing project build file.
+		public String projectDir;	
 		// Relative path to the location to scan for migrations. Optional. Defaults to "db/changelog".
 		public String location
 		// The target version up to which should consider migrations. Null if latest.
