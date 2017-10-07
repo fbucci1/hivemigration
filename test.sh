@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #
 #  Copyright 2017 Fernando Raul Bucci
 #
@@ -14,4 +16,19 @@
 #  limitations under the License.
 #
 
-implementation-class=org.hivemigration.gradle.plugins.hivemigration.HiveMigrationPlugin
+set -e
+
+cd hivemigration-gradle-plugin
+
+echo "Testing plugin"
+gradle test
+
+echo "Installing plugin for sample project"
+gradle install
+
+echo "Running sample"
+cd ../hivemigration-gradle-sample
+
+gradle migrate
+
+echo "Done"

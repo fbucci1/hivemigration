@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #
 #  Copyright 2017 Fernando Raul Bucci
 #
@@ -14,4 +16,24 @@
 #  limitations under the License.
 #
 
-implementation-class=org.hivemigration.gradle.plugins.hivemigration.HiveMigrationPlugin
+set -e
+
+echo "Deleting Local M2 repository"
+rm -rf ~/.m2/repository
+
+echo "Building plugin"
+cd hivemigration-gradle-plugin
+rm -rf .gradle
+
+gradle install
+
+echo "Testing plugin"
+gradle test
+
+echo "Running sample"
+cd ../hivemigration-gradle-sample
+rm -rf .gradle
+
+gradle migrate
+
+echo "Done"
