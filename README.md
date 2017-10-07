@@ -114,6 +114,7 @@ In order for the plugin to read the corresponding property, findProperty() metho
 |installed_on|VARCHAR(23)|Timestamp when script started being executed.|
 |execution_time|BIGINT|Milliseconds ellapsed for the execution of the script.|
 |success|DECIMAL(1)|1 ok, 0 error.|
+|error|VARCHAR(100)|Error message.|
 
 # Contributing
 
