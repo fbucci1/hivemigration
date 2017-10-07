@@ -55,14 +55,21 @@ public class MigrateScriptExecutor {
 		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 	}
 
-	public static void executeScripts(Map<String, String> config, Connection con, File schemaFolder) {
+	public static void executeScripts(Map<String, String> config, Connection con, File schemaFolder,
+			boolean tableExisted) {
 		//
-		Integer initialVersion = retrieveInitialVersion(config, con);
+		Integer initialVersion;
+		if (tableExisted) {
+			initialVersion = retrieveInitialVersion(config, con);
+		} else {
+			initialVersion = 0;
+		}
 		//
 		String auxTarget = config.get(AbstractTask.KEY_TARGET);
 		Integer target = auxTarget == null ? null : Integer.valueOf(auxTarget);
 		//
-		logger.info("Current version in schema is " + initialVersion + ". Target is " + target);
+		logger.info("Version in metadata table is " + initialVersion + ". Target is "
+				+ (target != null ? target : "latest"));
 		//
 		Map<Integer, File> sortedVFiles = getSortedVFiles(schemaFolder);
 		//
@@ -72,15 +79,14 @@ public class MigrateScriptExecutor {
 			//
 			if (target != null && version > target) {
 				logger.info("Ignoring script: " + file.getName());
-			} else if (initialVersion != null && version <= initialVersion) {
+			} else if (version <= initialVersion) {
 				logger.info("Ignoring script: " + file.getName());
 			} else {
 				//
 				int success = 0;
 				long initTime = System.currentTimeMillis();
 				try {
-					executeScript(config, con, version, file);
-					success = 1;
+					success = executeScript(config, con, version, file);
 				} catch (NullPointerException e) {
 				}
 				long endTime = System.currentTimeMillis();
@@ -103,8 +109,8 @@ public class MigrateScriptExecutor {
 		values.add(initTime);
 		values.add(version);
 		values.add(file.getName());
-		values.add(sdf.format(new Date(initTime)));
 		values.add(config.get(AbstractTask.KEY_USER));
+		values.add(sdf.format(new Date(initTime)));
 		values.add(executionTime);
 		values.add(success);
 		//
@@ -120,7 +126,7 @@ public class MigrateScriptExecutor {
 
 	private static Integer retrieveInitialVersion(Map<String, String> config, Connection con) {
 		//
-		Integer initialVersion = null;
+		Integer initialVersion = 0;
 		//
 		Statement stmt = null;
 		try {
@@ -150,7 +156,7 @@ public class MigrateScriptExecutor {
 		return initialVersion;
 	}
 
-	private static void executeScript(Map<String, String> config, Connection con, Integer version, File file) {
+	private static int executeScript(Map<String, String> config, Connection con, Integer version, File file) {
 		//
 		Statement stmt = null;
 		try {
@@ -167,13 +173,12 @@ public class MigrateScriptExecutor {
 			//
 			List<SQLStatement> statements = ScriptParseUtil.readStatementsFromScript(script, scriptName);
 			//
-			ScriptExecutionUtil.executeScript(config, stmt, version, scriptName, statements);
+			return ScriptExecutionUtil.executeScript(config, stmt, version, scriptName, statements);
 			//
 		} finally {
 			JDBCUtil.closeStatement(stmt);
 		}
 		//
-
 	}
 
 	private static Map<Integer, File> getSortedVFiles(File schemaFolder) {

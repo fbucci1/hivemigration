@@ -22,12 +22,13 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hivemigration.gradle.plugins.hivemigration.HiveMigrationManagedException;
 
 public class ScriptExecutionUtil {
 
 	static final Logger logger = LogManager.getLogger(ScriptExecutionUtil.class.getName());
 
-	public static void executeScript(Map<String, String> config, Statement stmt, Integer scriptVersion,
+	public static int executeScript(Map<String, String> config, Statement stmt, Integer scriptVersion,
 			String scriptName, List<SQLStatement> statements) {
 		//
 		logger.info("Executing script: " + scriptName);
@@ -38,9 +39,15 @@ public class ScriptExecutionUtil {
 			//
 			logger.info(where + ":" + s.line + " " + s.sql.substring(0, Math.min(s.sql.length(), 15)) + "... ");
 			//
-			JDBCUtil.execute(stmt, s.sql);
+			try {
+				JDBCUtil.execute(stmt, s.sql);
+			} catch (HiveMigrationManagedException e) {
+				return 0;
+			}
 			//
 		}
+		//
+		return 1;
 	}
 
 }

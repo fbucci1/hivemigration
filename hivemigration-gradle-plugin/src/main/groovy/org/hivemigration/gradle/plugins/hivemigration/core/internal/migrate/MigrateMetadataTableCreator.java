@@ -37,12 +37,13 @@ public class MigrateMetadataTableCreator {
 
 	static final Logger logger = LogManager.getLogger(MigrateMetadataTableCreator.class.getName());
 
-	public static void ensureTableExists(Map<String, String> config, Connection con) {
+	public static boolean ensureTableExists(Map<String, String> config, Connection con) {
 		//
 		String schema = config.get(AbstractTask.KEY_SCHEMA);
 		String table = config.get(AbstractTask.KEY_TABLE);
 		//
-		if (!doesTableExist(con, schema, table)) {
+		boolean tableExisted = doesTableExist(con, schema, table);
+		if (!tableExisted) {
 			logger.info("Metadata table does not exist: " + table);
 			createTable(config, con, schema, table);
 			logger.info("Metadata table created: " + table);
@@ -50,6 +51,7 @@ public class MigrateMetadataTableCreator {
 			logger.info("Metadata table already exists: " + table);
 		}
 		//
+		return tableExisted;
 	}
 
 	private static void createTable(Map<String, String> config, Connection con, String schema, String table) {

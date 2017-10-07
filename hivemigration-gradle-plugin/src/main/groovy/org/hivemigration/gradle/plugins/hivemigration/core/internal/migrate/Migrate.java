@@ -61,9 +61,9 @@ public class Migrate {
 		//
 		MigrateSchemaCreator.ensureSchemaExists(config, con);
 		//
-		MigrateMetadataTableCreator.ensureTableExists(config, con);
+		boolean tableExisted = MigrateMetadataTableCreator.ensureTableExists(config, con);
 		//
-		MigrateScriptExecutor.executeScripts(config, con, schemaFolder);
+		MigrateScriptExecutor.executeScripts(config, con, schemaFolder, tableExisted);
 		//
 	}
 
