@@ -126,7 +126,7 @@ Filenames must match following pattern: `V(VersionNumber)__(Name).q`.
 
    Notice VersionNumber must be an integer greater than 0. 
   
-   It is recommended to start with VersionNumber equals to 1 for the first migration, and increment it one by one whithout leaving unused gaps.
+   It is recommended to start with a VersionNumber that is equal to 1 for the first migration, and then increment it one by one whithout leaving unused gaps for the following files.
    
    As a general rule, migrations should never be changed once tested and distributed.
 
