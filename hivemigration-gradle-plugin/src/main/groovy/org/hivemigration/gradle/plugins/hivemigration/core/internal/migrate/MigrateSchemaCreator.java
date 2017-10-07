@@ -57,7 +57,7 @@ public class MigrateSchemaCreator {
 			stmt = JDBCUtil.createStatement(con);
 			//
 			// TODO: look first in Filesystem if overriden by project in db/support
-			String resourceLocation = "db/createSchema.sql";
+			String resourceLocation = "db/createSchema.q";
 			String script = ResourceUtil.loadResource(resourceLocation);
 			String scriptName = resourceLocation.replaceAll("db/", "res:");
 			//
@@ -68,7 +68,7 @@ public class MigrateSchemaCreator {
 			//
 			List<SQLStatement> statements = ScriptParseUtil.readStatementsFromScript(script, scriptName);
 			//
-			ScriptExecutionUtil.executeScript(config, stmt, scriptName, statements);
+			ScriptExecutionUtil.executeScript(config, stmt, null, scriptName, statements);
 			//
 		} finally {
 			JDBCUtil.closeStatement(stmt);

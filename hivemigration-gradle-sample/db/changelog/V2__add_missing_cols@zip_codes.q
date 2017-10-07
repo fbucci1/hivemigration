@@ -13,8 +13,8 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
-create table IF NOT EXISTS ${schema}.sample_table_2 (
-  id                int,
-  name              string
-)
-partitioned by (ddate string);
+
+alter table ${schema}.ZIP_CODES add columns (NAME VARCHAR(50));
+
+alter table ${schema}.ZIP_CODES add columns (PROVINCE VARCHAR(50));
+

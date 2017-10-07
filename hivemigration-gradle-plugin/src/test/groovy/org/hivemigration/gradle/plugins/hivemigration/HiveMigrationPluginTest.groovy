@@ -54,7 +54,7 @@ class HiveMigrationPluginTest {
 		project.tasks.migrate.setConfiguration(AbstractTask.KEY_URL,"jdbc:hive2://localhost:10000");
 		project.tasks.migrate.setConfiguration(AbstractTask.KEY_ENV,"UAT");
 		project.tasks.migrate.setConfiguration(AbstractTask.KEY_SCHEMA,"STAGE_\${ENV}");
-		project.tasks.migrate.setConfiguration(AbstractTask.KEY_PROJECT_DIR,"../hivemigration-sample");
+		project.tasks.migrate.setConfiguration(AbstractTask.KEY_PROJECT_DIR,"../hivemigration-gradle-sample");
 		project.tasks.migrate.setConfiguration(AbstractTask.KEY_LOCATION,"db/changelog");
 		project.tasks.migrate.setConfiguration(AbstractTask.KEY_TARGET,"2");
 		project.tasks.migrate.execute()

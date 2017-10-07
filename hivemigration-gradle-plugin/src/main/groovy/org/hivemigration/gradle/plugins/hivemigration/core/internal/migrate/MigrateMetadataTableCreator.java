@@ -59,7 +59,7 @@ public class MigrateMetadataTableCreator {
 			stmt = JDBCUtil.createStatement(con);
 			//
 			// TODO: look first in Filesystem if overriden by project in db/support
-			String resourceLocation = "db/createMetadataTable.sql";
+			String resourceLocation = "db/createMetadataTable.q";
 			String script = ResourceUtil.loadResource(resourceLocation);
 			String scriptName = resourceLocation.replaceAll("db/", "res:");
 			//
@@ -71,7 +71,7 @@ public class MigrateMetadataTableCreator {
 			//
 			List<SQLStatement> statements = ScriptParseUtil.readStatementsFromScript(script, scriptName);
 			//
-			ScriptExecutionUtil.executeScript(config, stmt, scriptName, statements);
+			ScriptExecutionUtil.executeScript(config, stmt, null, scriptName, statements);
 			//
 		} finally {
 			JDBCUtil.closeStatement(stmt);

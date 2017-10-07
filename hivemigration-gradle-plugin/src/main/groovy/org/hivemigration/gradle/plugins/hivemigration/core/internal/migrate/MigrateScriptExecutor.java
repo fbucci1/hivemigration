@@ -42,6 +42,12 @@ import org.hivemigration.gradle.plugins.hivemigration.tasks.AbstractTask;
 
 public class MigrateScriptExecutor {
 
+	private static final String FILE_VERSION_DELIMITER = "__";
+
+	private static final String FILE_PREFIX = "V";
+
+	private static final String FILE_SUFIX = ".q";
+
 	static final Logger logger = LogManager.getLogger(MigrateScriptExecutor.class.getName());
 
 	static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
@@ -161,7 +167,7 @@ public class MigrateScriptExecutor {
 			//
 			List<SQLStatement> statements = ScriptParseUtil.readStatementsFromScript(script, scriptName);
 			//
-			ScriptExecutionUtil.executeScript(config, stmt, scriptName, statements);
+			ScriptExecutionUtil.executeScript(config, stmt, version, scriptName, statements);
 			//
 		} finally {
 			JDBCUtil.closeStatement(stmt);
@@ -179,17 +185,11 @@ public class MigrateScriptExecutor {
 		for (File file : files) {
 			//
 			String fileName = file.getName();
-			if (fileName.startsWith("V")) { // ignore R files
+			if (fileName.startsWith(FILE_PREFIX)) { // ignore R files
 				//
 				fileName = fileName.substring(1, fileName.length() - 3); // Remove preffix (V) and suffix (.sql)
 				//
-				int pos = fileName.indexOf("__");
-				if (pos == -1) {
-					throw new HiveMigrationManagedException(
-							"Wrong file name format. It must have '__' after version number. File: " + file);
-				}
-				//
-				Integer version = Integer.valueOf(fileName.substring(0, pos));
+				Integer version = getFileVersion(file, fileName);
 				//
 				if (sortedFiles.containsKey(version)) {
 					throw new HiveMigrationManagedException(
@@ -204,6 +204,17 @@ public class MigrateScriptExecutor {
 		return sortedFiles;
 	}
 
+	private static Integer getFileVersion(File file, String fileName) {
+		int pos = fileName.indexOf(FILE_VERSION_DELIMITER);
+		if (pos == -1) {
+			throw new HiveMigrationManagedException("Wrong file name format. It must have '" + FILE_VERSION_DELIMITER
+					+ "' after version number. File: " + file);
+		}
+		//
+		Integer version = Integer.valueOf(fileName.substring(0, pos));
+		return version;
+	}
+
 	private static List<File> scanForFiles(File schemaFolder) {
 		//
 		List<File> list = new ArrayList<File>();
@@ -213,16 +224,16 @@ public class MigrateScriptExecutor {
 			//
 			if (file.isFile()) {
 				//
-				if (file.getName().startsWith("R") || file.getName().startsWith("V")) {
-					if (file.getName().endsWith(".sql")) {
+				if (file.getName().startsWith(FILE_PREFIX)) {
+					if (file.getName().endsWith(FILE_SUFIX)) {
 						list.add(file);
 					} else {
 						throw new HiveMigrationManagedException(
-								"Wrong sufix for file name. It must be '.sql'. File: " + file);
+								"Wrong sufix for file name. It must be '" + FILE_SUFIX + "'. File: " + file);
 					}
 				} else {
 					throw new HiveMigrationManagedException(
-							"Wrong prefix for file name. It must be 'V' or 'R'. File: " + file);
+							"Wrong prefix for file name. It must be '" + FILE_PREFIX + "'. File: " + file);
 				}
 			}
 			//

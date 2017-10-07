@@ -27,14 +27,16 @@ public class ScriptExecutionUtil {
 
 	static final Logger logger = LogManager.getLogger(ScriptExecutionUtil.class.getName());
 
-	public static void executeScript(Map<String, String> config, Statement stmt, String scriptName,
-			List<SQLStatement> statements) {
+	public static void executeScript(Map<String, String> config, Statement stmt, Integer scriptVersion,
+			String scriptName, List<SQLStatement> statements) {
 		//
 		logger.info("Executing script: " + scriptName);
 		//
 		for (SQLStatement s : statements) {
 			//
-			logger.info(scriptName + ":" + s.line + " " + s.sql.substring(0, Math.min(s.sql.length(), 15)) + "... ");
+			String where = scriptVersion != null ? scriptVersion.toString() : scriptName;
+			//
+			logger.info(where + ":" + s.line + " " + s.sql.substring(0, Math.min(s.sql.length(), 15)) + "... ");
 			//
 			JDBCUtil.execute(stmt, s.sql);
 			//

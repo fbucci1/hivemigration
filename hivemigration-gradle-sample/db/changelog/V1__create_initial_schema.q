@@ -14,8 +14,6 @@
 -- limitations under the License.
 --
 
-create table IF NOT EXISTS ${schema}.sample_table_3 (
-  id                int,
-  name              string
-)
-partitioned by (ddate string);
+create table IF NOT EXISTS ${schema}.ZIP_CODES (
+  ZIP_CODE  	VARCHAR(10)
+);
