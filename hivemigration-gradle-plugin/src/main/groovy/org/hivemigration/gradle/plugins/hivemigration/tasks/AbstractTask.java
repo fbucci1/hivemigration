@@ -77,7 +77,7 @@ public abstract class AbstractTask extends DefaultTask {
 
 	@TaskAction
 	void exec() {
-		getLogger().warn("Executing " + this.getClass().getSimpleName() + " task!");
+		logger.warn("Executing " + this.getClass().getSimpleName() + " task!");
 		try {
 			setConfigurations();
 			//
@@ -90,7 +90,7 @@ public abstract class AbstractTask extends DefaultTask {
 		} catch (Throwable e) {
 			getLogger().error("Error " + e, e);
 		}
-		getLogger().warn("Task " + this.getClass().getSimpleName() + " finished.");
+		logger.warn("Task " + this.getClass().getSimpleName() + " finished.");
 	}
 
 	void run() {
