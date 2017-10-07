@@ -88,8 +88,9 @@ public class MigrateScriptExecutor {
 				long endTime = System.currentTimeMillis();
 				//
 				long executionTime = endTime - initTime;
-				boolean success = errorMsg != null && !(errorMsg.trim().equals(""));
+				boolean success = errorMsg == null || (errorMsg.trim().equals(""));
 				insertRowInMetadataTable(config, con, version, file, initTime, executionTime, success, errorMsg);
+				//
 				if (!success) {
 					return;
 				}
@@ -113,7 +114,7 @@ public class MigrateScriptExecutor {
 		values.add(sdf.format(new Date(initTime)));
 		values.add(executionTime);
 		values.add(success ? 1 : 0);
-		values.add(errorMsg.length() < 100 ? errorMsg : errorMsg.substring(0, 100));
+		values.add(errorMsg==null?"":(errorMsg.length() < 100 ? errorMsg : errorMsg.substring(0, 100)));
 		//
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("ENV", config.get(AbstractTask.KEY_ENV));
