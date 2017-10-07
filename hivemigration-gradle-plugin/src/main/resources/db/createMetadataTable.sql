@@ -14,14 +14,6 @@
 -- limitations under the License.
 
 -- This script is the template for creating metadata table
--- Sample values: https://flywaydb.org/getstarted/how
---    seq: Timestamp when script started executing (System.currentTimeMillis())
---    version: Database version. Retrieved from file name. 0 for R files.
---    script: Name of the script file.
---    installed_by: User for HIVE connection.
---    installed_on: Timestamp when script started being executed.
---    execution_time: Milliseconds ellapsed for the execution of the script.
---    success: 1 ok, 0 error.
 
 CREATE TABLE ${schema}.${table} (
     seq BIGINT,
